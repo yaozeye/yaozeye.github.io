@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" sizes="any" /> 
+		 <style type="text/css">
+			 * {
+			 margin: 0;
+			 padding: 0;
+			 }
+			 #slider-box {
+			 width: 300px;
+			 height: 50px;
+			 border-radius: 4px;
+			 background: #ccc;
+			 margin: 250px auto;
+			 position: relative;
+			 }
+			 #slider {
+			 width: 48px;
+			 height: 48px;
+			 border: 1px solid #eee;
+			 text-align: center;
+			 line-height: 48px;
+			 display: inline-block;
+			 background: #fff;
+			 border-radius: 4px;
+			 cursor: move;
+			 position: absolute;
+			 left: 0;
+			 z-index: 5;
+			 }
+			 #slider-text {
+			 text-align: center;
+			 line-height: 50px;
+			 display: inline-block;
+			 width: 100%;
+			 height: 50px;
+			 font-family: "Arial";
+			 position: absolute;
+			 left: 0;
+			 z-index: 4;
+			 }
+			 #slider-bg {
+			 width: 0;
+			 height: 48px;
+			 background: green;
+			 position: absolute;
+			 z-index: 3;
+			 border-radius: 4px;
+			 }
+			 #slider-Emerge {
+			 width: 100px;
+			 background:;
+			 height: 50px;
+			 position: absolute;
+			 }
+			 #stop-go {
+			 width: 48px;
+			 height: 48px;
+			 border: 1px solid #eee;
+			 background:#36F;
+			 position: absolute;
+			 right: -1px;
+			 display: none;
+			 text-align: center;
+			 line-height: 48px;
+			 color: #fff;
+			 font-family: "Arial";
+			 border-radius: 4px;
+			 z-index: 5;
+			 }
+			 div{
+			 -moz-user-select:none;
+			 -webkit-user-select:none;
+			 user-select:none; 
+			 }
+		 </style>
+	</head>
+	<body>
+	 <div id="slider-box">
+	 <span id="slider">＞</span>
+	 <span id="slider-text">Slide To Unlock</span>
+	 <span id="slider-bg"></span>
+	 <span id="slider-Emerge"></span>
+	 <span id="stop-go">∨</span>
+	 </div>
+	</body>
+	 <script type="text/javascript">
+	 var sliderel={
+	  $: function(selector){
+	  return document.getElementById(selector)
+	  },
+	 getEvent:function(e){
+
+	  var e=e || window.event
+	  return e;
+	 },
+	 stopBubble:function(e){
+	  var e =this.getEvent(e)
+	  if(typeof e.preventDefault != "undefined"){
+	  e.preventDefault();
+	  }else{
+	  e.returnValue = false;
+	  }
+	 }
+	 },
+	 Elemt={
+	 flag:false,
+	 nowMoseX: 0,
+	 mx:sliderel.$("slider-box"),
+	 sd:sliderel.$("slider"),
+	 st:sliderel.$("slider-text"),
+	 sb:sliderel.$("slider-bg"),
+	 se:sliderel.$("slider-Emerge"),
+	 sg:sliderel.$("stop-go"),
+	 }
+	 Elemt.sd.onmousedown=function(e){ 
+	  var e =sliderel.getEvent(e)
+	  sliderel.stopBubble(e);
+	  Elemt.flag=true
+	  nowMoseX=e.clientX-Elemt.sd.offsetLeft;
+	 }
+	 //Max Distance
+	 maxMove=Elemt.mx.offsetWidth -Elemt.sd.offsetWidth;
+	 //Succeed or not
+	 Elemt.mx.onmousemove=function(e){
+	  var e =sliderel.getEvent(e)
+	  if(Elemt.flag){
+	  var moveX=e.clientX-nowMoseX;
+	  var oElemLeft=Elemt.sd.offsetLeft;//Zone judging 
+	  if(oElemLeft<0){ //Out of limited zone or not
+	  moveX=0;
+	  Elemt.flag=false
+	  }else if(oElemLeft>maxMove){
+	  moveX=maxMove;
+	  Elemt.sg.style.display="block";
+	  Elemt.sd.style.display="none"
+	  Elemt.sb.style.width=300+"px"
+	  Elemt.st.innerHTML="Succeed"
+	  Elemt.st.style.color="#fff"
+	  }
+	  }
+	  Elemt.sd.style.left=moveX+"px" 
+	  Elemt.sb.style.width=oElemLeft+20+"px";
+	 }
+	 //Slide successfully or not
+	 Elemt.mx.onmouseup=function(e){
+	  var e =sliderel.getEvent(e)
+	  Elemt.flag=false
+	  if(Elemt.sd.offsetLeft<maxMove){
+	  speed=Math.ceil(Elemt.sd.offsetLeft/40);
+	  time=setInterval(function(){
+	  if(Elemt.sd.offsetLeft>=0){
+	   Elemt.sd.style.left=Elemt.sd.offsetLeft-speed+"px";
+	   Elemt.sb.style.width=Elemt.sb.offsetWidth-speed+"px";
+	  }else{
+	   clearInterval(time);
+	   return false;
+	  }
+	  },10)
+	  }
+	  }
+	 //Slide successfully or not
+	 Elemt.sd.onmouseout=function(e){
+	  sliderel.stopBubble(e);
+	  Elemt.flag=false;
+	  if( Elemt.sd.offsetLeft<maxMove){
+	  speed=Math.ceil(Elemt.sd.offsetLeft/40);
+	  time=setInterval(function(){
+	  if(Elemt.sd.offsetLeft>=0){
+	   Elemt.sd.style.left=Elemt.sd.offsetLeft-speed+"px";
+	   Elemt.sb.style.width=Elemt.sb.offsetWidth-speed+"px";
+	  }else{
+	   clearInterval(time);
+	   return false;
+	  }
+	  },10);
+	  }
+	 }
+	 </script>
+</html>

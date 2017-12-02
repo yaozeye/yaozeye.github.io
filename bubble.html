@@ -1,0 +1,634 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-us">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" sizes="any" />
+		<title>
+			Bubble Bobble
+		</title>
+		<style type="text/css">
+			body ::selection{
+				color: #FFFFFF;
+				background: #FF1493;
+					}
+			body,div,p,ul,ol,li{margin:0; padding:0;}
+			body {font-family:Arial,sans-serif;background:#4f8f91;font-size:13px;text-align:left;}
+			ul {list-style-type:none;}
+			a {text-decoration:none;}
+			img {border:none;}
+			.board {margin-left:200px;margin-top:10px;background:#803a07;border-style:solid; border-width:1px;
+			 border-color:#b86c20 #341b02 #341b02 #b86c20;padding:5px;float:left;overflow:hidden;_margin-left:100px;}
+			#box {position:relative;width:288px;height:432px;background:#0099ff;float:left;}
+			.red {background:url("bubble_images/red.png") center no-repeat;
+			_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="bubble_images/red.png",sizingMethod="scale");}
+			.blue {background:url("bubble_images/blue.png") center no-repeat;
+			_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="bubble_images/blue.png",sizingMethod="scale");}
+			.pink {background:url("bubble_images/pink.png") center no-repeat;
+			_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="bubble_images/pink.png",sizingMethod="scale");}
+			.green {background:url("bubble_images/green.png") center no-repeat;
+			_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="bubble_images/green.png",sizingMethod="scale");}
+			.yellow {background:url("bubble_images/yellow.png") center no-repeat;
+			_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="bubble_images/yellow.png",sizingMethod="scale");}
+			.purple {background:url("bubble_images/purple.png") center no-repeat;
+			_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="bubble_images/purple.png",sizingMethod="scale");}
+			.cyan {background:url("bubble_images/cyan.png") center no-repeat;
+			_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="bubble_images/cyan.png",sizingMethod="scale");}
+			.red,.blue,.pink,.green,.yellow,.purple,.cyan,.ball {position:absolute;width:32px;height:32px;z-index:2;
+			 _background:none;}
+			#arrow {width:20px;height:160px;position:absolute;left:50%;z-index:1;margin-left:-10px;overflow:hidden;}
+			.arrow {width:20px;height:80px;background:url("bubble_images/a2.png") left top no-repeat;_background:none;
+			 _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="bubble_images/a2.png",sizingMethod="scale");} 
+			.ambit {position:absolute;left:0px;bottom:0px;width:100%;height:48px;background:#B86C20;}
+			#notice {position:absolute;left:50%;top:-1000px;border:solid 3px #803a07;padding:2px 5px;z-index:5;
+			 font-size:20px;font-weight:bold;text-align:center;background:#FF9900;color:#006699;}
+			.pad {background:#9c27b0;width:160px;height:432px;font-size:14px;color:#ffff33;float:left;
+			 text-align:center;position:relative;}
+			 #run {cursor:pointer;width:46px;height:22px;line-height:22px;border-width:1px;border-style:solid;font-weight:bold;
+			  border-color:#b86c20 #4f2302 #4f2302 #b86c20; background:#803a07;margin:20px auto 0 auto; }
+			 #score, #level {color:#f00;} 
+			.bb {margin:10px auto 0 auto;height:22px;line-height:22px;white-space:pre;font-weight:bold;}  
+			#about {position:absolute;left:0px;bottom:0px;text-align:left;padding:8px;}
+			#about li {height:18px;line-height:18px;}
+		</style>
+		<script type="text/javascript">
+			 var isIE=!!window.ActiveXObject;
+			 var firefox=navigator.userAgent.indexOf("Firefox")!=-1;
+			 var isIE6=(!!window.ActiveXObject)&&(!window.XMLHttpRequest);
+			 var safari = window.openDatabase && !window.chrome;  
+			 var chrome= !!(window.chrome && window.google);  
+			 var opera=!!window.opera;
+			function $(id) { return typeof id=="string"?document.getElementById(id):id;}
+			function copy(destination, source) {
+				for (var property in source) {
+					destination[property]=source[property];
+				}
+			 }
+			function ppl(panel){
+			   var W=panel.clientWidth, R=16, size=R*2, maxh=panel.clientHeight-R*3, maxX=W-size, maxY=maxh-size,
+				   sl=W/2-R, st=maxh+R/2, bubbles=[], $cache, grid=[], lock=false, timer, GameOver=true,
+				   onotice=$("notice"), oscore=$("score"), olevel=$("level"), colors=["red","blue","pink"], sum=0, stage=1, 
+				   sin=Math.sin, cos=Math.cos, PI=Math.PI, pow=Math.pow, sqrt=Math.sqrt, iAngle=-PI/2, 
+				   Yd=Math.floor(sqrt(3)*R), intervals=["",10,12,16,22,30];
+			   var fragment=document.createDocumentFragment(), div;
+			   for(var i=0,rows=parseInt(maxh/size);i<rows; i++){
+				 grid[i]=[];
+				 for(var j=0,cols=parseInt(W/size);j<cols; j++){
+				   div=document.createElement("div");
+				   fragment.appendChild(div);
+				   bubbles.push(div);
+				   grid[i][j]=[];
+				 }
+				}
+			   $cache=bubbles.slice(0); 
+			   panel.appendChild(fragment); 
+			   var isEmpty=function(){
+					 for(var i=0; i<cols; i++){
+					   if(grid[0][i].length) return false;
+					 }
+					  return true;
+				   };
+			   var tangent=function(x1,y1,x2,y2){
+					 if(sqrt(pow((x2-x1),2)+pow((y2-y1),2))<=size) return true;
+					 return false;
+				   };
+			   var record=function(bubble,cl,ct){
+					  var x=parseInt(cl/size), y=parseInt(ct/size);     
+					  grid[y][x].push({b:bubble,l:cl,t:ct});
+					  if(cl%size>0) grid[y][x+1].push({b:bubble,l:cl,t:ct});
+					  if(ct%size>0&&ct<maxY) {
+						grid[y+1][x].push({b:bubble,l:cl,t:ct}); 
+						if(cl%size>0) grid[y+1][x+1].push({b:bubble,l:cl,t:ct});
+					  }
+					};      
+			   var  deleteInfo=function(bubble,x,y){
+					  var pos=grid[y][x], len=pos.length;
+					  if(len==1) pos.pop(); 
+					  else {
+						for(var i=0; i<len; i++){
+						  if(pos[i].b==bubble) { return pos.splice(i,1); }
+						}
+					  }
+				   };
+			  var remove=function(bubble,cl,ct,drop){
+					 var x=parseInt(cl/size), y=parseInt(ct/size);
+					 if(!drop) bubble.className="";  
+					 deleteInfo(bubble,x,y);
+					 if(cl%size>0) deleteInfo(bubble,x+1,y);
+					 if(ct%size>0&&ct<maxY) {
+					   deleteInfo(bubble,x,y+1);
+					   cl%size>0 && deleteInfo(bubble,x+1,y+1);
+					 }
+				   };
+			   var defoam=(function(){
+				 var obj={};
+				 var gather=function(pos,className,cl,ct){
+					   var len=pos.length, a=[];
+					   if(len>0) {
+						var g
+						for(var i=0; i<len; i++){
+						  g=pos[i];
+						  if(!obj[g.l+"_"+g.t]&&g.b.className==className&&tangent(cl,ct,g.l,g.t)){
+							obj[g.l+"_"+g.t]=true; a.push({b:g.b, l:g.l, t:g.t});
+						  }
+						 }
+						}
+						return a; 
+					  }; 
+				 var collect=function(className,cl,ct){
+					  var con=[], X=parseInt(cl/size), Y=parseInt(ct/size), p;
+					  var poses=[{v:1,y:Y,x:X}, {v:ct<maxY,y:Y+1,x:X}, {v:cl<maxX,y:Y,x:X+1},
+							{v:X>0,y:Y,x:X-1}, {v:(ct%size>0&&cl%size>0),y:Y+1,x:X+1},
+							{v:Y>0,y:Y-1,x:X}];  
+					  for(var i=0,len=poses.length; i<len; i++){
+						 p=poses[i];
+						 if(p.v) con=con.concat(gather(grid[p.y][p.x],className,cl,ct));
+					   }      
+					   return con; 
+					 };
+				 return function(bubble,cl,ct){
+				   var className=bubble.className, tmp, arr, total=[], i, len, g;
+				   obj={}; 
+				   arr=collect(className,cl,ct);
+				   while(arr.length){
+					 total=total.concat(arr); tmp=arr; len=tmp.length; arr=[];        
+					 for(i=0; i<len; i++) {
+					   g=tmp[i];
+					   arr=arr.concat(collect(className,g.l,g.t));
+					 }
+				   }
+				   len=total.length;
+				   if(len>=2){
+					setTimeout(function(){
+					 bubble.className=""; bubbles.unshift(bubble);
+					 for(i=0;i<len;i++){
+					   g=total[i]; remove(g.b, g.l, g.t); bubbles.unshift(g.b);  
+					  }
+					 sum+=(len+1); setLevel(sum); bubbleDrop(total);         
+					 },200);
+					 return true;
+				   }
+				   return false;
+				 };
+				})();
+			   var bubbleDrop=(function(){
+				  var obj={}, mark={};
+				  var gather=function(pos,cl,ct){
+						var len=pos.length, a=[], g;
+						if(len>0) {
+						  for(var i=0; i<len; i++){
+							g=pos[i];
+							if(!obj[g.l+"_"+g.t]&&tangent(cl,ct,g.l,g.t)){
+							  if(g.t==0||mark[g.l+"_"+g.t]==true) return false;
+							  obj[g.l+"_"+g.t]=true; a.push({b:g.b, l:g.l, t:g.t});
+							}
+						   }
+						  } 
+						 return a; 
+					   };
+				  var $serch=function(cl,ct){
+						var arr=[], X=parseInt(cl/size), Y=parseInt(ct/size), tmp, p;
+						var poses=[{v:1,y:Y,x:X}, {v:ct<maxY,y:Y+1,x:X}, {v:cl<maxX,y:Y,x:X+1},
+							{v:(cl%size==0&&X>0),y:Y,x:X-1}, {v:(ct%size>0&&cl%size>0),y:Y+1,x:X+1},
+							{v:Y>0,y:Y-1,x:X}];
+						for(var i=0,len=poses.length; i<len; i++){
+							p=poses[i];
+							if(p.v){
+							  tmp=gather(grid[p.y][p.x],cl,ct);
+							  if(tmp) arr=arr.concat(tmp); else return false;
+							}
+						}
+						return arr; 
+					  };      
+				  var collect=function(cl,ct){
+						var con=[], tmp, group=[], total=[], x=parseInt(cl/size), y=parseInt(ct/size); 
+						var $$=function(pos){          
+						  var b=gather(pos,cl,ct), g;
+						  if(b&&b.length){ 
+							for(var i=0,len=b.length; i<len; i++){
+							 con.push(b[i]); obj={}; obj[b[i].l+"_"+b[i].t]=true;
+							 while(con.length){
+							   group=group.concat(con); tmp=con; con=[];
+							   for(var j=0,clen=tmp.length; j<clen; j++){
+								g=tmp[j];
+								var m=$serch(g.l,g.t);
+								if(m) con=con.concat(m);
+								else {con=[];group=[];break;}
+							  }
+							}
+							total=total.concat(group); copy(mark, obj); group=[];
+						   }
+						  }
+						 };
+						 $$(grid[y][x]); 
+						 if(ct<maxY) $$(grid[y+1][x]);
+						 if(cl<maxX) $$(grid[y][x+1]);
+						 if(cl%size==0&&x>0) $$(grid[y][x-1]); 
+						 if(ct%size>0){             
+						  cl%size>0&&$$(grid[y+1][x+1]); 
+						 }
+						 else if(y>0) {$$(grid[y-1][x]);}
+						 return total;
+					  };
+				  var drop=function(bunch,nums){
+						var d=0, g; 
+						var tt=setInterval(function(){
+							 d+=2;
+							 for(var i=0; i<nums; i++){
+							   g=bunch[i];
+							   g.b.style.top=(g.t+d)+"px";
+							 }
+							if(d>=size){ clearInterval(tt);
+							  for(var i=0; i<nums; i++){
+							   g=bunch[i];
+							   g.b.className="";
+							   bubbles.unshift(g.b);
+							  }
+							} 
+						},20);    
+					  };     
+				  return function(bunch){
+						  var total=[], len=bunch.length;
+						  obj={}; mark={};
+						  for(var i=0; i<len; i++){
+						   total=total.concat(collect(bunch[i].l,bunch[i].t));
+						  }
+						  len=total.length;
+						  if(len>0){ var g;               
+						   for(var i=0; i<len; i++){
+							 g=total[i];
+							 remove(g.b, g.l, g.t,1);
+						   }
+						   sum+=len;
+						   setLevel(sum);
+						   drop(total,len);
+						  } 
+						 if(addBubble) { $addBatch(); addBubble=false; } 
+						 lock=false;
+					   };
+				 })();
+
+			   var serchPath=(function(){
+				 var obj={};
+				 var MD=function(bx,by,ex,ey,r){
+					 var X=ex-bx, Y=ey-by;
+					 return -sqrt(Math.abs(4*pow(R,2)-pow((X*sin(r)-Y*cos(r)),2)))+(X*cos(r)+Y*sin(r));
+				  };
+				 var hit=function(bubble,cl,ct,x,y,angle,path) {
+					var pos=grid[y][x], len=pos.length, tg=[], p, d, g;
+					if(len>0){
+					 for(var i=0; i<len; i++){
+					   g=pos[i];
+					   if(obj[g.l+"_"+g.t]) continue;
+					   d=sqrt(pow((g.l-cl),2)+pow((g.t-ct),2));
+					   if(d<=size){ obj[g.l+"_"+g.t]=true;
+						 if(d<size){                
+						   var bl=path[path.length-1].l, bt=path[path.length-1].t;
+						   p=MD(bl,bt,g.l,g.t,angle);
+						   if(isNaN(p)) {obj[g.l+"_"+g.t]=false; continue;}
+						   cl=bl+p*cos(angle);
+						   ct=bt+p*sin(angle);
+						   if(cl<0) {
+							cl=0;
+							ct=g.t+Math.sqrt(4*pow(R,2)-pow(g.l,2));
+						   }
+						   else if(cl>maxX){
+							cl=maxX;
+							ct=g.t+Math.sqrt(4*pow(R,2)-pow((g.l-cl),2));
+						   }               
+						 }
+						 else {
+						   p=Math.abs((ct-bt)/sin(angle));
+						 }
+						 tg.push({dis:p, l:cl, t:ct, hl:g.l, ht:g.t});
+					   }
+					 }
+					}
+					return tg;
+				  }; 
+				 return function(bubble,cl,ct,angle){
+					var path=[{l:cl,t:ct}], x, y, d, tg=[], speed=R; obj={};
+					while(1){
+					  cl=cl+speed*cos(angle);
+					  ct=ct+speed*sin(angle); 
+					  if(cl<=0) {
+						cl=0;
+						d=Math.abs(path[path.length-1].l/cos(angle));
+						ct=path[path.length-1].t+d*sin(angle);
+						if(ct<0) ct=0;
+						path.push({l:cl,t:ct,dis:d});
+						if(ct==0) break;
+						angle=-(PI+angle); continue;
+					  }
+					  else if(cl>=maxX) {
+						cl=maxX;
+						d=Math.abs((cl-path[path.length-1].l)/cos(angle));
+						ct=path[path.length-1].t+d*sin(angle);
+						if(ct<0) ct=0;
+						path.push({l:cl,t:ct,dis:d});
+						if(ct==0) break;
+						angle=-(PI+angle); continue;
+					  }
+					  if(ct<0) ct=0; 
+					  if(ct<maxh){
+						x=Math.floor(cl/size); y=Math.floor(ct/size);
+						tg=tg.concat(hit(bubble,cl,ct,x,y,angle,path));
+						if(cl%size>0) tg=tg.concat(hit(bubble,cl,ct,x+1,y,angle,path));
+						if(ct<maxY&&ct%size>0) { 
+						 tg=tg.concat(hit(bubble,cl,ct,x,y+1,angle,path)); 
+						 if(cl%size>0) tg=tg.concat(hit(bubble,cl,ct,x+1,y+1,angle,path));
+						}
+						if(tg.length>0){
+						  if(tg.length>1) tg.sort(function(a,b){return a.dis-b.dis;});
+						  path.push({l:tg[0].l, t:tg[0].t, hl:tg[0].hl, ht:tg[0].ht, dis:tg[0].dis}); break;
+						}
+					  }
+					  if(ct==0) {
+						cl=(Math.floor(cl/size)+(cl%size>R?1:0))*size;
+						d=Math.abs((ct-path[path.length-1].t)/sin(angle));
+						path.push({l:cl,t:ct,dis:d}); break;
+					  }
+					}
+					return path;
+				  };
+				 })(); 
+			   function shoot(bubble,cl,ct,angle){
+				 lock=true;
+				 var path=serchPath(bubble,cl,ct,angle), len=path.length, i=0, t=0, duaration=8;
+				 bubble.timer=setInterval(function(){
+				  t++;
+				  var step=t/duaration*path[i+1].dis;
+				  bubble.style.left=(path[i].l+step*cos(angle))+"px";
+				  bubble.style.top=(path[i].t+step*sin(angle))+"px"; 
+				  if(t==duaration){
+				   i++;
+				   if(i==len-1) {
+					 clearInterval(bubble.timer); bubble.timer=null;
+					 cl=path[i].l; ct=path[i].t;
+					 bubble.style.left=cl+"px";
+					 bubble.style.top=ct+"px";
+					setTimeout(function(){
+					 if(ct>0) {
+					  ct=(Math.floor(ct/Yd)+(ct%Yd>Yd/2?1:0))*Yd;
+					  if(ct==path[i].ht){
+						cl=cl<path[i].hl?path[i].hl-size:path[i].hl+size; 
+					  }
+					  else {cl=cl<path[i].hl?path[i].hl-R:path[i].hl+R; }
+					  if(cl>=maxX+R) cl=maxX-R;
+					  bubble.style.left=cl+"px";
+					  bubble.style.top=ct+"px";
+					  if(ct>maxY) { clearInterval(timer); return gameover();}
+					 }
+					 if(!defoam(bubble,cl,ct)) {
+					  record(bubble,cl,ct);
+					  if(addBubble) { $addBatch(); addBubble=false; }
+					  lock=false;
+					 }
+					},20);
+				   }
+				   else {t=0; angle=-(PI+angle);}
+				  }
+				},10);
+			   };   
+
+				var addBubble=false, $addBatch; 
+				var autoAdd=(function(){
+				  var Vserch=function(cl,b){
+					  var ct=0, y=rows-1, x=parseInt(cl/size), expand=cl%size>0, hit=false; 
+					  var $$=function(pos){
+						   var len=pos.length, g, arr=[];
+						   if(len) {
+							for(var i=0; i<len; i++){
+							 g=pos[i];
+							 if(g.b!=b&&Math.abs(g.l-cl)<size) {
+							   arr.push({l:g.l, t:g.t});
+							  } 
+							 }
+							if(arr.length) { 
+							 if(arr.length>1) arr.sort(function(a,b){return b.t-a.t;});
+							 ct=arr[0].t+Yd;
+							 if(cl==arr[0].l) cl=cl-R;
+							 hit=true;
+						   }
+						  }
+					   };
+					  while(!hit&&y>=0) {
+						$$(grid[y][x]); 
+						if(!hit&&expand) $$(grid[y][x+1]);
+						y--;
+					   }
+					   if(!hit&&cl%size>0) cl=cl-R;
+					   return {l:cl,t:ct};
+					 };   
+				   var addBatch=function(){
+					  var n=isEmpty()?cols:cols-1;
+					  var s=n==cols?0:R, b, pos, cl, ct, len=colors.length;
+					  lock=true;
+					  for(var i=0; i<n; i++){
+						pos=Vserch(s,b); cl=pos.l; ct=pos.t;
+						b=bubbles.shift();
+						record(b,cl,ct);
+						b.style.left=cl+"px"; b.style.top=ct+"px";
+						b.className=colors[Math.floor(Math.random()*len)];
+						if(ct>maxY) { clearInterval(timer); return gameover();}
+						s+=size;
+					   }
+					   lock=false;
+					 };
+				   $addBatch=addBatch;  
+				   return function(t){ 
+					  if(timer) clearInterval(timer);
+					  timer=setInterval(function(){
+						if(lock) addBubble=true;
+						else { addBatch();}  
+					  },t*1000);
+					 };
+					})(); 
+				 onotice.innerHTML="NEXT LEVEL"; onotice.style.marginLeft=(-onotice.offsetWidth/2)+"px";        
+				 function setLevel(nums){
+					 oscore.innerHTML=nums;
+					 var s=1+parseInt(nums/120);
+					 if(s>stage) { 
+					  stage=s; olevel.innerHTML=s;
+					  if(s>5) s=5;
+					  colors.push(["","","yellow","purple","green","cyan"][s]);
+					  autoAdd(intervals[s]);
+					  onotice.style.top="50%";
+					  setTimeout(function(){onotice.style.top="-1000px";},1000);
+					 }
+				   };
+				  function gameover() {
+					onotice.innerHTML="GameOver<br />Press'START'toPlayAgain";
+					onotice.style.marginLeft=(-onotice.offsetWidth/2)+"px";
+					onotice.style.top="50%";
+					return GameOver=true;
+				  }    
+				var init=function(){ 
+					 var next=function(){
+					   var bubble=bubbles[bubbles.length-1];
+					   bubble.style.left=sl+"px";
+					   bubble.style.top=st+"px";
+					   bubble.className=colors[Math.floor(Math.random()*colors.length)];
+					 };  
+					 next();
+					 var load=function(){
+					  var y=Math.floor(sqrt(3)*R), n, l, b, len=colors.length;
+					  for(var i=0; i<3; i++){
+						n=i==0?cols:cols-1; l=i%2==0?0:R;
+						for(var j=0; j<n; j++){
+						  b=bubbles.shift();
+						  b.style.left=l+"px";
+						  b.style.top=y*i+"px";
+						  record(b,l,y*i);
+						  l+=size;
+						  b.className=colors[Math.floor(Math.random()*len)];
+						}
+					  }
+					 };   
+					 $("run").onclick=function(){
+						if(!GameOver) return;
+						if(isEmpty()){ 
+						load();
+						}
+						else { 
+						 for(var k=0,len=$cache.length; k<len; k++){
+						   $cache[k].className=""; 
+						 }
+						 bubbles=$cache.slice(0);
+						 for(var i=0; i<rows; i++){
+						   grid[i]=[];
+						   for(var j=0; j<cols; j++){grid[i][j]=[];}
+						 }
+						 stage=1; sum=0; oscore.innerHTML=0; olevel.innerHTML=1; colors=["red","blue","pink"];
+						 next(); load(); 
+						}
+						autoAdd(10); 
+						GameOver=false; lock=false;
+						onotice.innerHTML="NEXT LEVEL";onotice.style.marginLeft=(-onotice.offsetWidth/2)+"px";
+						onotice.style.top="-1000px"; 
+					  };
+				   var keyTimer, ox, oy;  
+				   var guide=(function(){
+					 var oarrow=$("arrow");
+					 oarrow.style.top=(st+R-oarrow.offsetHeight/2)+"px";
+					 var bound=oarrow.getBoundingClientRect();
+					 ox=bound.left+oarrow.offsetWidth/2;
+					 oy=bound.top+oarrow.offsetHeight/2;
+					 if(isIE) {  
+					  oarrow.style.filter="progid:DXImageTransform.Microsoft.Matrix()";
+					  var matrix=oarrow.filters.item("DXImageTransform.Microsoft.Matrix");
+					  matrix.SizingMethod = "auto expand";
+					  matrix.FilterType = "bilinear";
+					  return function(radian) {
+					   var s=sin(radian), c=cos(radian);
+					   matrix.M11=c;
+					   matrix.M12=-s;
+					   matrix.M21=s;
+					   matrix.M22=c;
+					   oarrow.style.marginLeft=-oarrow.offsetWidth/2+"px";
+					   oarrow.style.top=(st+R-oarrow.offsetHeight/2)+"px";
+					  };
+					}
+					else {
+					 var tran=firefox&&"MozTransform"||(chrome||safari)&&"webkitTransform"||opera&&"OTransform";
+					 return function(radian){
+					  var ang=radian*180/PI;
+					  oarrow.style[tran]="rotate("+ang+"deg)";
+					  oarrow.style.transform="rotate("+ang+"deg)";
+					 };
+					}
+				   })();
+				  var changeAngle=function(limit,step){
+					  if(iAngle==limit) return;     
+					  if(keyTimer) clearInterval(keyTimer);
+					  var M=Math[step>0?"min":"max"];
+					  keyTimer=setInterval(function(){
+						iAngle=M(limit,iAngle+step); 
+						guide(iAngle+PI/2);
+					  },10);
+				   }; 
+				 var delay;  
+				 panel.onmousemove=function(e){
+				   e=e||window.event;
+				   var ex=e.clientX, ey=e.clientY;
+				   if(delay) clearTimeout(delay);
+				   delay=setTimeout(function(){
+					iAngle=Math.abs(Math.atan2(ey-oy,ex-ox)*180/PI);
+					iAngle=Math.min(170,Math.max(10,iAngle)); 
+					iAngle=-iAngle*PI/180; 
+					guide(iAngle+PI/2 );
+				   },10);
+				 }; 
+				 panel.onmousedown=function(e){
+				   if(GameOver||lock) return;
+				   shoot(bubbles.pop(),sl,st,iAngle);next();
+				 };
+				 document.onkeydown=function(e){
+				  e=e||window.event;
+				  var k=e.keyCode;
+				  if(k==37) {changeAngle(-PI*17/18,-PI/180); }
+				  if(k==39) {changeAngle(-PI/18,PI/180);  }
+				  if(k==32) {
+				   if(GameOver||lock) return;
+				   shoot(bubbles.pop(),sl,st,iAngle);next();
+				   }        
+				 }; 
+				 document.onkeyup=function(e){
+				   e=e||window.event;
+				   var k=e.keyCode;
+				   if(k==37||k==39) clearInterval(keyTimer);
+				 }; 
+				};
+			   init();     
+			 }
+			 window.onload=function(){ppl($("box"));};
+		</script>
+	</head>
+	<body>
+		<a href="index.html">
+			<font style="font-size:50px;color:white;text-shadow: 5px 5px 5px #FF0000;">
+				<b>
+					HOMEPAGE
+				</b>
+			</font>
+		</a>
+		<br />
+		<div class="board">
+			<div id="box">
+				<div id="arrow">
+					<div class="arrow">
+					</div>
+				</div>
+				<div class="ambit">
+				</div>
+				<div id="notice">
+				</div>
+			</div>
+			<div class="pad">
+				<div id="run">
+					START
+				</div>
+				<div class="bb">SCORE:  <span id="score">0</span>
+				</div>
+				<div class="bb">Level: <span id="level">1</span>
+				</div>
+				<ul id="about">
+					<li>
+						Bubble Bobble
+					</li>
+				</ul>
+			</div>
+		</div>
+		<p style="clear:both;line-height:16px;color:#000;text-align:center;font-size:14px;padding-top:8px;">
+			Operation: Mouse and SPACE or Direction Left and Right
+		</p>
+		<br />
+		<br />
+		<p>
+			<font style="font-size:20px;color:white;">
+				Copyright (C) yaozeye@foxmail.com
+			</font>
+		</p>
+	</body>
+</html>
