@@ -1,13 +1,13 @@
 			body ::selection{
 				color: #DDDDFF;
-				background: #EE82EE;
+				background: #4B9EFF;
 					}
 			body {
 				color: #9E9E9E;
-				background: #EE82EE;
+				background: #4B9EFF;
 				text-align: center;
 				text-decoration: none;
-				font-family: Times, Georgia, Monospace, Cursive;
+				font-family: Times, Georgia, Arial, MS Pmincho, MS Mincho;
 				font-variant: small-caps;
 				font-size: 100%;
 					}
@@ -35,4 +35,10 @@
 			font-weight: 700;
 			color: black;
 			text-shadow: 0.3em 0.3em 0.3em #FF0000;	
+					}
+			#home-white {
+			font-size: 3em;
+			font-weight: 700;
+			color: white;
+			text-shadow: 0.3em 0.3em 0.3em #FFFF00;	
 					}
