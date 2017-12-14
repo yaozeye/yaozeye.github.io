@@ -7,7 +7,7 @@
 				background: #4B9EFF;
 				text-align: center;
 				text-decoration: none;
-				font-family: Times, Georgia, Arial, MS Pmincho, MS Mincho;
+				font-family: Arial, MS Pmincho, SimSun, MS Mincho, Georgia;
 				font-variant: small-caps;
 				font-size: 100%;
 					}
@@ -17,7 +17,7 @@
 			#title-caps-red {
 				color: #C20C0C;
 				font-size: 2em;
-				font-family: Georgia, Times, Monospace, Cursive;
+				font-family: Cursive, Times, Monospace, MS Pmincho, SimSun;
 				font-variant: small-caps;
 					}
 			#copyright-white {
