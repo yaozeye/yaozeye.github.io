@@ -28,7 +28,6 @@ transition:width 2s;
 -webkit-transition:width 2s; /* Safari and Chrome */
 -o-transition:width 2s; /* Opera */
 }
-
 div:hover
 {
 width:512px;
