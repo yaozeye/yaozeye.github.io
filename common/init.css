@@ -6,10 +6,11 @@
 	color: #DDDDFF;
 	background: #4B9EFF;
 	}
-::selection {
+::selection 
+{
 	color: #DDDDFF;
 	background: #4B9EFF;
-		}
+}
 body {
 	color: #9E9E9E;
 	background: #4B9EFF;
@@ -22,6 +23,21 @@ body {
 img {
 	border:none;
 	}
+div
+{
+width:128px;
+height:128px;
+background:blue;
+transition:width 2s;
+-moz-transition:width 2s; /* Firefox 4 */
+-webkit-transition:width 2s; /* Safari and Chrome */
+-o-transition:width 2s; /* Opera */
+}
+
+div:hover
+{
+width:512px;
+}
 #title-caps-red {
 	color: #C20C0C;
 	font-size: 2em;
