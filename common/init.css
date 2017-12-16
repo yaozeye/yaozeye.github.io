@@ -6,6 +6,10 @@
 	color: #DDDDFF;
 	background: #4B9EFF;
 	}
+::selection {
+	color: #DDDDFF;
+	background: #4B9EFF;
+		}
 body {
 	color: #9E9E9E;
 	background: #4B9EFF;
@@ -21,7 +25,7 @@ img {
 #title-caps-red {
 	color: #C20C0C;
 	font-size: 2em;
-	font-family: Georgia, Times, MS Pmincho, SimSun;
+	font-family:Georgia,Times,MS Pmincho,SimSun;
 	font-variant: small-caps;
 	}
 #copyright-white {
