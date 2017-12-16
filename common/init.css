@@ -1,44 +1,48 @@
-			body ::selection{
-				color: #DDDDFF;
-				background: #4B9EFF;
-					}
-			body {
-				color: #9E9E9E;
-				background: #4B9EFF;
-				text-align: center;
-				text-decoration: none;
-				font-family: Arial, MS Pmincho, SimSun, MS Mincho, Georgia;
-				font-variant: small-caps;
-				font-size: 100%;
-					}
-			img {
-				border:none;
-					}
-			#title-caps-red {
-				color: #C20C0C;
-				font-size: 2em;
-				font-family: Cursive, Times, Monospace, MS Pmincho, SimSun;
-				font-variant: small-caps;
-					}
-			#copyright-white {
-				font-variant: normal;
-				font-size: 1.8em;
-				color: white;
-					}
-			#copyright-black {
-				font-variant: normal;
-				font-size: 1.8em;
-				color: black;
-					}
-			#home-black {
-			font-size: 3em;
-			font-weight: 700;
-			color: black;
-			text-shadow: 0.3em 0.3em 0.3em #FF0000;	
-					}
-			#home-white {
-			font-size: 3em;
-			font-weight: 700;
-			color: white;
-			text-shadow: 0.3em 0.3em 0.3em #FFFF00;	
-					}
+body::selection{
+	color: #DDDDFF;
+	background: #4B9EFF;
+		}
+body::-moz-selection{
+	color: #DDDDFF;
+	background: #4B9EFF;
+		}
+body {
+	color: #9E9E9E;
+	background: #4B9EFF;
+	text-align: center;
+	text-decoration: none;
+	font-family: Arial, MS Pmincho, SimSun, MS Mincho, Georgia;
+	font-variant: small-caps;
+	font-size: 100%;
+		}
+img {
+	border:none;
+		}
+#title-caps-red {
+	color: #C20C0C;
+	font-size: 2em;
+	font-family: Cursive, Times, Monospace, MS Pmincho, SimSun;
+	font-variant: small-caps;
+		}
+#copyright-white {
+	font-variant: normal;
+	font-size: 1.8em;
+	color: white;
+		}
+#copyright-black {
+	font-variant: normal;
+	font-size: 1.8em;
+	color: black;
+		}
+#home-black {
+	font-size: 3em;
+	font-weight: 700;
+	color: black;
+	text-shadow: 0.3em 0.3em 0.3em #FF0000;	
+		}
+#home-white {
+	font-size: 3em;
+	font-weight: 700;
+	color: white;
+	text-shadow: 0.3em 0.3em 0.3em #FFFF00;	
+		}
