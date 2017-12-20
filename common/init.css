@@ -1,11 +1,15 @@
 ::-webkit-selection {
 	color: #DDDDFF;
 	background: #4B9EFF;
-		}
+}
 ::-moz-selection {
 	color: #DDDDFF;
 	background: #4B9EFF;
-	}
+}
+::-o-selection	{
+	color: #DDDDFF;
+	background:#4B9EFF;
+}
 body {
 	color: #9E9E9E;
 	background: #4B9EFF;
@@ -14,58 +18,59 @@ body {
 	font-family:Arial,MS Pmincho,SimSun,MS Mincho,Georgia;
 	font-variant: small-caps;
 	font-size: 100%;
-	}
+}
 img {
 	border:none;
-	}
-div
-{
-width:128px;
-height:128px;
-background:blue;
-transition:width 2s;
--moz-transition:width 2s; /* Firefox 4 */
--webkit-transition:width 2s; /* Safari and Chrome */
--o-transition:width 2s; /* Opera */
 }
-div:hover
-{
-width:512px;
+div {
+width:8em;
+height:8em;
+background:#99CCFF;
+transition:width 4s;
+-moz-transition:width 4s;
+-webkit-transition:width 4s;
+-o-transition:width 4s;
 }
-#title-caps-red {
+div:hover {
+width:32em;
+}
+#h-caps-red {
 	color: #C20C0C;
 	font-size: 2em;
 	font-family:Georgia,Times,MS Pmincho,SimSun;
 	font-variant: small-caps;
-	}
+}
 #copyright-white {
 	font-variant: normal;
 	font-size: 1.8em;
 	color: white;
-	}
+}
 #copyright-black {
 	font-variant: normal;
 	font-size: 1.8em;
 	color: black;
-	}
+}
 #home-black {
 	font-size: 3em;
 	font-weight: 700;
 	color: black;
 	text-shadow: 0.3em 0.3em 0.3em #FF0000;	
-	}
+}
 #home-white {
 	font-size: 3em;
 	font-weight: 700;
 	color: white;
 	text-shadow: 0.3em 0.3em 0.3em #FFFF00;	
-	}
-#poem {
+}
+#poem-stress {
 	color: #FFFFFF;
 	background: #4B9EFF;
 	text-align: center;
 	text-decoration: none;
 	font-family:Simsun,Arial,MS Pmincho,Georgia;
 	font-size: 200%;
-	}
-#center { MARGIN-RIGHT: auto; MARGIN-LEFT: auto; }
+}
+#div-center {
+	margin-right: auto;
+	margin-left: auto;
+}
