@@ -11,7 +11,7 @@
 	background:#4B9EFF;
 }
 body {
-	color: #9E9E9E;
+	color: #993300;
 	background: #4B9EFF;
 	text-align: center;
 	text-decoration: none;
@@ -21,18 +21,6 @@ body {
 }
 img {
 	border:none;
-}
-div {
-width:8em;
-height:8em;
-background:#99CCFF;
-transition:width 4s;
--moz-transition:width 4s;
--webkit-transition:width 4s;
--o-transition:width 4s;
-}
-div:hover {
-width:32em;
 }
 #h-caps-red {
 	color: #C20C0C;
