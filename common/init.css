@@ -1,18 +1,18 @@
 ::-webkit-selection {
 	color: #DDDDFF;
-	background: #4B9EFF;
+	background: #FD3E4D;
 }
 ::-moz-selection {
 	color: #DDDDFF;
-	background: #4B9EFF;
+	background: #FD3E4D;
 }
 ::-o-selection	{
 	color: #DDDDFF;
-	background:#4B9EFF;
+	background:#FD3E4D;
 }
 body {
 	color: #993300;
-	background: #4B9EFF;
+	background: #FD3E4D;
 	text-align: center;
 	text-decoration: none;
 	font-family:Arial,MS Pmincho,SimSun,MS Mincho,Georgia;
