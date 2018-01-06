@@ -8,14 +8,14 @@
 }
 ::-o-selection	{
 	color: #DDDDFF;
-	background:#FD3E4D;
+	background: #FD3E4D;
 }
 body {
 	color: #993300;
 	background: #FD3E4D;
 	text-align: center;
 	text-decoration: none;
-	font-family:Arial,MS Pmincho,SimSun,MS Mincho,Georgia;
+	font-family: Arial,Century Gothic, MS Pmincho, SimSun, MS Mincho, Georgia;
 	font-variant: small-caps;
 	font-size: 100%;
 }
@@ -25,7 +25,7 @@ img {
 #h-caps-red {
 	color: #C20C0C;
 	font-size: 2em;
-	font-family:Georgia,Times,MS Pmincho,SimSun;
+	font-family: Georgia, Times, MS Pmincho, SimSun;
 	font-variant: small-caps;
 }
 #copyright-white {
@@ -55,7 +55,7 @@ img {
 	background: #4B9EFF;
 	text-align: center;
 	text-decoration: none;
-	font-family:Simsun,Arial,MS Pmincho,Georgia;
+	font-family: Simsun, Arial, MS Pmincho, Georgia;
 	font-size: 200%;
 }
 #div-center {
