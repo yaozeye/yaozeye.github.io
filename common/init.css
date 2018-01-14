@@ -12,12 +12,13 @@
 }
 body {
 	color: #993300;
-	background: #FD3E4D;
+	background: #9E9E9E;
 	text-align: center;
 	text-decoration: none;
-	font-family: Arial, Century Gothic, MS Pmincho, SimSun, MS Mincho, Georgia;
+	font-family: Century Gothic, Arial, MS Pmincho, SimSun, MS Mincho, Georgia;
 	font-variant: small-caps;
 	font-size: 100%;
+	font-weight: 512;
 }
 img {
 	border:none;
@@ -25,7 +26,7 @@ img {
 #h-caps-red {
 	color: #C20C0C;
 	font-size: 2em;
-	font-family: Georgia, Times, MS Pmincho, SimSun;
+	font-family: Century Gothic, Arial, Georgia, Times, MS Pmincho, SimSun;
 	font-variant: small-caps;
 }
 #copyright-white {
