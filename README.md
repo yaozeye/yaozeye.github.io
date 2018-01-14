@@ -2,7 +2,7 @@
 yaozeye.github.io
 ## Welcome
 <br />
-## License: ``MIT``
+### License: ``MIT``
 <br />
 > Twitter: @xfy_yyz
 <br />
