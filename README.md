@@ -3,6 +3,6 @@ yaozeye.github.io
 ## Welcome
 ### License: ``MIT``
 <br />
-> Twitter: @xfy_yyz
-<br /><a href="https://yaozeye.github.io">test</a>
+  > Twitter: @xfy_yyz
+<br />
 > Commercial Affairs: yaozeye@outlook.com
