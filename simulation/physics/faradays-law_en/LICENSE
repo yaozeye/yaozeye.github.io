@@ -1,0 +1,466 @@
+‪LICENSE
+
+
+
+‪Faraday's Law‬ 1.1.10
+Copyright 2002-2017, Regents of the University of Colorado
+PhET Interactive Simulations, University of Colorado Boulder
+
+This file is licensed under Creative Commons Attribution 4.0
+For alternate source code licensing, see https://github.com/phetsims
+For licenses for third-party software used by this simulation, see below
+For more information, see http://phet.colorado.edu/en/licensing/html
+
+The PhET name and PhET logo are registered trademarks of The Regents of the
+University of Colorado. Permission is granted to use the PhET name and PhET logo
+only for attribution purposes. Use of the PhET name and/or PhET logo for promotional,
+marketing, or advertising purposes requires a separate license agreement from the
+University of Colorado. Contact phethelp@colorado.edu regarding licensing.
+
+
+
+  // This simulation uses following third-party resources.  The following code block describes each resource
+  // and provides its licensing information.  The START and END tags make it easy to automatically parse
+  // and the entries are in JSON.  See getLicenseEntry.js for information about the attributes in each entry.
+  // ### START THIRD PARTY LICENSE ENTRIES ###
+
+
+  "lib": {
+    "almond-0.2.9.js": {
+      "text": [
+        "Copyright (c) 2011-2014, The Dojo Foundation All Rights Reserved."
+      ],
+      "projectURL": "https://github.com/jrburke/almond",
+      "license": "The MIT License",
+      "notes": "Allows a RequireJS-based simulation to run in its compiled (smaller, faster) form",
+      "licenseText": [
+        "MIT License",
+        "-----------",
+        "",
+        "Copyright (c) 2010-2011, The Dojo Foundation",
+        "",
+        "Permission is hereby granted, free of charge, to any person obtaining a copy",
+        "of this software and associated documentation files (the \"Software\"), to deal",
+        "in the Software without restriction, including without limitation the rights",
+        "to use, copy, modify, merge, publish, distribute, sublicense, and/or sell",
+        "copies of the Software, and to permit persons to whom the Software is",
+        "furnished to do so, subject to the following conditions:",
+        "",
+        "The above copyright notice and this permission notice shall be included in",
+        "all copies or substantial portions of the Software.",
+        "",
+        "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR",
+        "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,",
+        "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER",
+        "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,",
+        "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN",
+        "THE SOFTWARE."
+      ]
+    },
+    "easing-equations-r12": {
+      "text": [
+        "Copyright (c) 2001 Robert Penner. All rights reserved"
+      ],
+      "license": "Revised BSD License",
+      "projectURL": "http://robertpenner.com/easing/",
+      "notes": "Easing equations used in Tween.js, used to animate some graphics",
+      "licenseText": [
+        "Copyright © 2001 Robert Penner",
+        "All rights reserved.",
+        "",
+        "Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following ",
+        "conditions are met:",
+        "",
+        "* Redistributions of source code must retain the above copyright notice, this list of conditions and the following ",
+        "disclaimer.",
+        "* Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following ",
+        "disclaimer in the documentation and/or other materials provided with the distribution.",
+        "* Neither the name of the author nor the names of contributors may be used to endorse or promote products derived from ",
+        "this software without specific prior written permission.",
+        "",
+        "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, ",
+        "INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE ",
+        "DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, ",
+        "SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;",
+        "LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN ",
+        "CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS ",
+        "SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
+      ]
+    },
+    "FileSaver-b8054a2.js": {
+      "text": [
+        "Copyright (c) 2015 Eli Grey. (http://eligrey.com)"
+      ],
+      "license": "The MIT License",
+      "projectURL": "https://github.com/eligrey/FileSaver.js",
+      "notes": "Used for saving screenshot images",
+      "licenseText": [
+        "Copyright © 2014 Eli Grey.",
+        "",
+        "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:",
+        "",
+        "The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.",
+        "",
+        "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
+        ""
+      ]
+    },
+    "fontawesome-webfont-3.0.2.svg": {
+      "text": [
+        "by Dave Gandy"
+      ],
+      "license": "SIL Open Font License, Version 1.1",
+      "projectURL": "https://github.com/FortAwesome/Font-Awesome/tree/v3.0.2",
+      "notes": "Provides shapes like the home icon and check box icons, used in FontAwesomeNode",
+      "licenseText": [
+        "Copyright (c) 2013, Dave Gandy - http://fontawesome.io",
+        "with Reserved Font Name Font Awesome.",
+        "",
+        "This Font Software is licensed under the SIL Open Font License, Version 1.1.",
+        "This license is copied below, and is also available with a FAQ at:",
+        "http://scripts.sil.org/OFL",
+        "",
+        "",
+        "-----------------------------------------------------------",
+        "SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007",
+        "-----------------------------------------------------------",
+        "",
+        "PREAMBLE",
+        "The goals of the Open Font License (OFL) are to stimulate worldwide",
+        "development of collaborative font projects, to support the font creation",
+        "efforts of academic and linguistic communities, and to provide a free and",
+        "open framework in which fonts may be shared and improved in partnership",
+        "with others.",
+        "",
+        "The OFL allows the licensed fonts to be used, studied, modified and",
+        "redistributed freely as long as they are not sold by themselves. The",
+        "fonts, including any derivative works, can be bundled, embedded,",
+        "redistributed and/or sold with any software provided that any reserved",
+        "names are not used by derivative works. The fonts and derivatives,",
+        "however, cannot be released under any other type of license. The",
+        "requirement for fonts to remain under this license does not apply",
+        "to any document created using the fonts or their derivatives.",
+        "",
+        "DEFINITIONS",
+        "\"Font Software\" refers to the set of files released by the Copyright",
+        "Holder(s) under this license and clearly marked as such. This may",
+        "include source files, build scripts and documentation.",
+        "",
+        "\"Reserved Font Name\" refers to any names specified as such after the",
+        "copyright statement(s).",
+        "",
+        "\"Original Version\" refers to the collection of Font Software components as",
+        "distributed by the Copyright Holder(s).",
+        "",
+        "\"Modified Version\" refers to any derivative made by adding to, deleting,",
+        "or substituting -- in part or in whole -- any of the components of the",
+        "Original Version, by changing formats or by porting the Font Software to a",
+        "new environment.",
+        "",
+        "\"Author\" refers to any designer, engineer, programmer, technical",
+        "writer or other person who contributed to the Font Software.",
+        "",
+        "PERMISSION & CONDITIONS",
+        "Permission is hereby granted, free of charge, to any person obtaining",
+        "a copy of the Font Software, to use, study, copy, merge, embed, modify,",
+        "redistribute, and sell modified and unmodified copies of the Font",
+        "Software, subject to the following conditions:",
+        "",
+        "1) Neither the Font Software nor any of its individual components,",
+        "in Original or Modified Versions, may be sold by itself.",
+        "",
+        "2) Original or Modified Versions of the Font Software may be bundled,",
+        "redistributed and/or sold with any software, provided that each copy",
+        "contains the above copyright notice and this license. These can be",
+        "included either as stand-alone text files, human-readable headers or",
+        "in the appropriate machine-readable metadata fields within text or",
+        "binary files as long as those fields can be easily viewed by the user.",
+        "",
+        "3) No Modified Version of the Font Software may use the Reserved Font",
+        "Name(s) unless explicit written permission is granted by the corresponding",
+        "Copyright Holder. This restriction only applies to the primary font name as",
+        "presented to the users.",
+        "",
+        "4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font",
+        "Software shall not be used to promote, endorse or advertise any",
+        "Modified Version, except to acknowledge the contribution(s) of the",
+        "Copyright Holder(s) and the Author(s) or with their explicit written",
+        "permission.",
+        "",
+        "5) The Font Software, modified or unmodified, in part or in whole,",
+        "must be distributed entirely under this license, and must not be",
+        "distributed under any other license. The requirement for fonts to",
+        "remain under this license does not apply to any document created",
+        "using the Font Software.",
+        "",
+        "TERMINATION",
+        "This license becomes null and void if any of the above conditions are",
+        "not met.",
+        "",
+        "DISCLAIMER",
+        "THE FONT SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,",
+        "EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF",
+        "MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT",
+        "OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE",
+        "COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,",
+        "INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL",
+        "DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING",
+        "FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM",
+        "OTHER DEALINGS IN THE FONT SOFTWARE.",
+        ""
+      ]
+    },
+    "jama-1.0.2": {
+      "text": [
+        "a basic linear algebra package for Java."
+      ],
+      "license": "Public Domain",
+      "projectURL": "http://math.nist.gov/javanumerics/jama/",
+      "notes": "A derived work (certain ported and modified files) is used in Dot, mainly for matrix decompositions. Used in assorted simulations.",
+      "licenseText": [
+        "Public Domain",
+        "",
+        "Copyright Notice This software is a cooperative product of The MathWorks and the National Institute of Standards and Technology (NIST) which has been released to the public domain. ",
+        "Neither The MathWorks nor NIST assumes any responsibility whatsoever for its use by other parties, and makes no guarantees, expressed or implied, about its quality, reliability, or any other characteristic."
+      ]
+    },
+    "jquery-2.1.0.js": {
+      "text": [
+        "Copyright (c) 2005, 2014 jQuery Foundation, Inc. and other contributors",
+        "(includes Sizzle.js, http://sizzlejs.com)"
+      ],
+      "license": "The MIT License",
+      "projectURL": "http://jquery.com",
+      "notes": "Facilitates interaction with browser DOM elements, mainly used in Scenery",
+      "licenseText": [
+        "Copyright 2013 jQuery Foundation and other contributors",
+        "http://jquery.com/",
+        "",
+        "Permission is hereby granted, free of charge, to any person obtaining",
+        "a copy of this software and associated documentation files (the",
+        "\"Software\"), to deal in the Software without restriction, including",
+        "without limitation the rights to use, copy, modify, merge, publish,",
+        "distribute, sublicense, and/or sell copies of the Software, and to",
+        "permit persons to whom the Software is furnished to do so, subject to",
+        "the following conditions:",
+        "",
+        "The above copyright notice and this permission notice shall be",
+        "included in all copies or substantial portions of the Software.",
+        "",
+        "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,",
+        "EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF",
+        "MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND",
+        "NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE",
+        "LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION",
+        "OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION",
+        "WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+      ]
+    },
+    "lodash-2.4.1.js": {
+      "text": [
+        "Copyright (c) 2012-2013 The Dojo Foundation, http://dojofoundation.org>",
+        "Based on Underscore.js 1.5.2, http://underscorejs.org/LICENSE",
+        "Copyright (c) 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors"
+      ],
+      "license": "The MIT License",
+      "projectURL": "http://lodash.com",
+      "notes": "Adds common data structure operations such as sorting, grouping, etc.",
+      "licenseText": [
+        "Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>",
+        "Based on Underscore.js 1.5.2, copyright 2009-2013 Jeremy Ashkenas,",
+        "DocumentCloud and Investigative Reporters & Editors <http://underscorejs.org/>",
+        "",
+        "Permission is hereby granted, free of charge, to any person obtaining",
+        "a copy of this software and associated documentation files (the",
+        "\"Software\"), to deal in the Software without restriction, including",
+        "without limitation the rights to use, copy, modify, merge, publish,",
+        "distribute, sublicense, and/or sell copies of the Software, and to",
+        "permit persons to whom the Software is furnished to do so, subject to",
+        "the following conditions:",
+        "",
+        "The above copyright notice and this permission notice shall be",
+        "included in all copies or substantial portions of the Software.",
+        "",
+        "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,",
+        "EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF",
+        "MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND",
+        "NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE",
+        "LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION",
+        "OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION",
+        "WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+      ]
+    },
+    "pegjs-0.7.0.js": {
+      "text": [
+        "Copyright (c) 2010-2012 David Majda"
+      ],
+      "license": "The MIT License",
+      "projectURL": "http://pegjs.majda.cz",
+      "notes": "Parser Generator for JavaScript. SVG path parsing in Kite",
+      "licenseText": [
+        "Copyright (c) 2010-2012 David Majda",
+        "",
+        "Permission is hereby granted, free of charge, to any person",
+        "obtaining a copy of this software and associated documentation",
+        "files (the \"Software\"), to deal in the Software without",
+        "restriction, including without limitation the rights to use,",
+        "copy, modify, merge, publish, distribute, sublicense, and/or sell",
+        "copies of the Software, and to permit persons to whom the",
+        "Software is furnished to do so, subject to the following",
+        "conditions:",
+        "",
+        "The above copyright notice and this permission notice shall be",
+        "included in all copies or substantial portions of the Software.",
+        "",
+        "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,",
+        "EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES",
+        "OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND",
+        "NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT",
+        "HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,",
+        "WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING",
+        "FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR",
+        "OTHER DEALINGS IN THE SOFTWARE."
+      ]
+    },
+    "text-2.0.12.js": {
+      "text": [
+        "Copyright (c) 2010-2014, The Dojo Foundation All Rights Reserved."
+      ],
+      "license": "The MIT License",
+      "projectURL": "http://github.com/requirejs/text",
+      "notes": "Loads strings to be displayed in the sim, including internationalized strings.",
+      "licenseText": [
+        "MIT License",
+        "-----------",
+        "",
+        "Copyright (c) 2010-2011, The Dojo Foundation",
+        "",
+        "Permission is hereby granted, free of charge, to any person obtaining a copy",
+        "of this software and associated documentation files (the \"Software\"), to deal",
+        "in the Software without restriction, including without limitation the rights",
+        "to use, copy, modify, merge, publish, distribute, sublicense, and/or sell",
+        "copies of the Software, and to permit persons to whom the Software is",
+        "furnished to do so, subject to the following conditions:",
+        "",
+        "The above copyright notice and this permission notice shall be included in",
+        "all copies or substantial portions of the Software.",
+        "",
+        "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR",
+        "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,",
+        "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER",
+        "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,",
+        "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN",
+        "THE SOFTWARE."
+      ]
+    },
+    "Tween-r12.js": {
+      "text": [
+        "Copyright (c) 2010-2012 Tween.js authors."
+      ],
+      "license": "The MIT License",
+      "projectURL": "https://github.com/tweenjs/tween.js/",
+      "notes": "Used to animate some graphics",
+      "dependencies": [
+        "easing-equations-r12"
+      ],
+      "licenseText": [
+        "The MIT License",
+        "",
+        "Copyright (c) 2010-2012 Tween.js authors.",
+        "",
+        "Easing equations Copyright (c) 2001 Robert Penner http://robertpenner.com/easing/",
+        "",
+        "Permission is hereby granted, free of charge, to any person obtaining a copy",
+        "of this software and associated documentation files (the \"Software\"), to deal",
+        "in the Software without restriction, including without limitation the rights",
+        "to use, copy, modify, merge, publish, distribute, sublicense, and/or sell",
+        "copies of the Software, and to permit persons to whom the Software is",
+        "furnished to do so, subject to the following conditions:",
+        "",
+        "The above copyright notice and this permission notice shall be included in",
+        "all copies or substantial portions of the Software.",
+        "",
+        "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR",
+        "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,",
+        "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE",
+        "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER",
+        "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,",
+        "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN",
+        "THE SOFTWARE."
+      ]
+    }
+  }
+  
+  window.phet.chipper.dependencies = {
+  "comment": "# faradays-law 1.1.10 Tue Dec 05 2017 01:37:12 GMT-0700 (MST)",
+  "assert": {
+    "sha": "11bc6a6d0344ba1a8b95982bad3552bffbdfdfd6",
+    "branch": "HEAD"
+  },
+  "axon": {
+    "sha": "202abb277f47a2fee77ebb980cdea7fc8f5a98ae",
+    "branch": "HEAD"
+  },
+  "babel": {
+    "sha": "26366701956b42bc71a4951ccac8de66830e65e4",
+    "branch": "master"
+  },
+  "brand": {
+    "sha": "ca32c317c4383028bc769becb2f8d443ce382f73",
+    "branch": "HEAD"
+  },
+  "chipper": {
+    "sha": "96f16ff0454960224230b81c8e3a341192ddf861",
+    "branch": "HEAD"
+  },
+  "dot": {
+    "sha": "b9e3c1e07271b8b4fee91fca360f51563fe479cb",
+    "branch": "HEAD"
+  },
+  "faradays-law": {
+    "sha": "97192bc79e02bb42e489dbb81dc45d5341b20242",
+    "branch": "HEAD"
+  },
+  "joist": {
+    "sha": "ac0dd663aee5ac4331beb8360de8ccf656ecf775",
+    "branch": "HEAD"
+  },
+  "kite": {
+    "sha": "7f2df7e9ec52ed32d8c0fe0c1fe6bfa8c043c510",
+    "branch": "HEAD"
+  },
+  "phet-core": {
+    "sha": "12bc1541f5937691efba4733f5617ede340fc7d0",
+    "branch": "HEAD"
+  },
+  "phetcommon": {
+    "sha": "2927e2db53a7902a786b2e15f9078180c3dde580",
+    "branch": "HEAD"
+  },
+  "scenery": {
+    "sha": "78f5dc168e57df1942df7355f13206982c3a9834",
+    "branch": "HEAD"
+  },
+  "scenery-phet": {
+    "sha": "0539f7b5ae4c297988206ef6728814c8c00303c2",
+    "branch": "HEAD"
+  },
+  "sherpa": {
+    "sha": "f3cf6285fe2e85ce9b8998db4f3361837fc8d9ce",
+    "branch": "HEAD"
+  },
+  "sun": {
+    "sha": "f678dd20763b18182a16b7725fecc45d92bdf8fd",
+    "branch": "HEAD"
+  },
+  "tandem": {
+    "sha": "210ece84c1dfdce1aedb77e451cd0ddc376db313",
+    "branch": "HEAD"
+  },
+  "vibe": {
+    "sha": "fbda216a85f156a08fe310f344b5fd2bae8f8786",
+    "branch": "HEAD"
+  }
+};
