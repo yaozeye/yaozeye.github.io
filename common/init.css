@@ -1,4 +1,17 @@
-::-webkit-selection {
+body {
+	color: #000000; /*#993300;*/
+	background: rgba(235, 115, 64, 1); /*#9E9E9E;*/
+	text-align: center;
+	text-decoration: none;
+	font-family: Century Gothic, Arial, MS Pmincho, SimSun, MS Mincho, Georgia;
+	font-variant: normal;
+	font-size: 100%;
+	font-weight: 400;
+}
+img {
+	border:none;
+}
+::-o-selection	{
 	color: #DDDDFF;
 	background: #FD3E4D;
 }
@@ -6,22 +19,9 @@
 	color: #DDDDFF;
 	background: #FD3E4D;
 }
-::-o-selection	{
+::-webkit-selection {
 	color: #DDDDFF;
 	background: #FD3E4D;
-}
-body {
-	color: #993300;
-	background: #9E9E9E;
-	text-align: center;
-	text-decoration: none;
-	font-family: Century Gothic, Arial, MS Pmincho, SimSun, MS Mincho, Georgia;
-	font-variant: normal;
-	font-size: 100%;
-	font-weight: 600;
-}
-img {
-	border:none;
 }
 #h-caps-red {
 	color: #C20C0C;
