@@ -1,11 +1,10 @@
 # yaozeye.github.io
-yaozeye.github.io
 ## Welcome
 ### License: ``MIT``
 <br />
-This is just a simple idea.
+Just a simple idea.
 <br />
->> Twitter: @xfy_yyz
+#### Twitter: @xfy_yyz
 <br />
->> Commercial Affairs: yaozeye@outlook.com
+#### Commercial Affairs: yaozeye@outlook.com
 <br />
