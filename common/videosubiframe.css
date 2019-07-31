@@ -1,5 +1,5 @@
 iframe {
 	border: 0;
-	scrolling: no;
+	overflow: hidden;
 	frameborder: no;	
 }
