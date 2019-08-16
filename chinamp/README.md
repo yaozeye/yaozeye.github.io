@@ -2,4 +2,4 @@
 ####显示简易中国地图，支持鼠标移入省份事件
 
 
-![alt text](https://yaozeye.github.io/chinamp/map.gif)
+![alt text](https://raw.githubusercontent.com/yaozeye/chinamap/master/map.gif)
