@@ -98,7 +98,7 @@ class Game {
     // 绘制提示文字
     this.context.font = '32px Microsoft YaHei'
     this.context.fillStyle = '#000'
-    this.context.fillText('CXK，下一关！', 308, 226)
+    this.context.fillText('CXK, Next Level!', 308, 226)
 	// audio.pause();
   }
   // 游戏通关
