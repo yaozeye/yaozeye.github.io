@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en_US">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="description" content="A CXK Play Basketball game under HTML5.">
+		<meta name="keywords" content="CXK,Basketball,Game,HTML5,open source,caixukun">
+		<link rel="stylesheet" href="css/bootstrap.min.css" crossorigin="anonymous">
+		<link rel="stylesheet" href="css/style.css?s=2">
+		<title>CXK Play Basketball</title>
+		<!--<link rel="stylesheet" href="css/common.css">-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/showdown.min.js"></script>
+		<script src="js/bootstrap.min.js" crossorigin="anonymous"></script>
+		<!--<script type="text/javascript">
+			// 百度统计代码
+			var _hmt = _hmt || [];
+			(function() {
+			  var hm = document.createElement("script");
+			  hm.src = "https://hm.baidu.com/hm.js?5adedb455da362ba577abe2fd8e1095d";
+			  var s = document.getElementsByTagName("script")[0];
+			  s.parentNode.insertBefore(hm, s);
+			})();
+		</script>-->
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<h2>CXK Play Basketball</h2>
+					<p>CXK, come out and play basketball!</p>
+					<hr>
+					<center>
+						<p>
+							<div class="input-group">
+								<span class="input-group-addon">Difficulty</span>
+								<select class="form-control" id="ballspeedset">
+									<option value="2">Easy(Speed 2)</option>
+									<option value="3" selected>Medium(Speed 3)</option>
+									<option value="5">Hard(Speed 5)</option>
+									<option value="7">Very Hard(Speed 7)</option>
+									<option value="9">Anti-human(Speed 9)</option>
+								</select>
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-danger" onclick="window.startGame()">Start</button>
+									<button type="button" class="btn btn-warning" onclick="window.pauseGame()">Pause</button>
+									<button type="button" class="btn btn-success" onclick="window.nextGame()">Next Level</button>
+								</div>
+							</div>
+						</p>
+					</center>
+					<center id="cdiv" style="width: 100%;">
+						<p><canvas id="canvas" style="width: 100%;height: 563px;"></canvas></p>
+					</center>
+					<hr>
+					<h3>How to play</h3>
+					<p>"Enter" to throw in, "←""→" to move, "P" to pause, "N" to change to next level when completing.</p>
+					<p>Skill："Q" or "W" to use hidden skills (cooldown needed), requires 1000 points each time.</p>
+					<p>Mobile users please press the left or right side to move cxk's ass.</p>
+					<p>Anything abnormal please make sceenshots and then feedback through Issues</p>
+					<hr>
+					<!--<h3>更新记录</h3>
+					<details>
+						<summary style="cursor: pointer;">点击查看更新内容</summary>
+						<div style="margin-top: 8px;">
+							<p>1.6：增加接球动作，修复球落地判定问题</p>
+							<p>1.5：增加更多的特效</p>
+							<p>1.4：增加难度设定功能</p>
+							<p>1.3：修复移动端操作问题</p>
+							<p>1.2：修复图片显示问题</p>
+							<p>1.1：将显示方式改为 background</p>
+							<p>1.0：CXK 打篮球发布</p>
+						</div>
+					</details>
+					<hr>-->
+				</div>
+			</div>
+		</div>
+	</body>
+	<!-- 图片预缓存 -->
+	<img src="images/ball.png" style="width: 0px;height: 0px;" />
+	<img src="images/ballshadow.png" style="width: 0px;height: 0px;" />
+	<img src="images/paddle_1.png" style="width: 0px;height: 0px;" />
+	<img src="images/paddle_2.png" style="width: 0px;height: 0px;" />
+	<img src="images/paddle2_1.png" style="width: 0px;height: 0px;" />
+	<img src="images/paddle2_2.png" style="width: 0px;height: 0px;" />
+	<img src="images/paddle3_1.png" style="width: 0px;height: 0px;" />
+	<img src="images/paddle3_2.png" style="width: 0px;height: 0px;" />
+	<img src="images/paddle4_1.png" style="width: 0px;height: 0px;" />
+	<img src="images/paddle4_2.png" style="width: 0px;height: 0px;" />
+	<!-- 背景音乐(已删除) -->
+	<!-- <audio src="" style="width: 0px;height: 0px;border: 0px;" id="audio" loop="-1"></audio> -->
+	<script src="js/common.js?s=4"></script>
+	<script src="js/scene.js?s=4"></script>
+	<script src="js/skills.js?s=4"></script>
+	<script src="js/game.js?s=4"></script>
+	<script src="js/main.js?s=4"></script>
+	<script>
+		var clientWidth = document.body.clientWidth;
+		var cxk_body = 1;
+		var move_way = 1;
+		canvas.width = canvas.clientWidth;
+		canvas.style.width = canvas.clientWidth + "px";
+		cdiv.style.width = cdiv.clientWidth + "px";
+		canvas.height = canvas.clientWidth / 1000 * 563;
+		canvas.style.height = canvas.clientWidth / 1000 * 563 + "px";
+		cdiv.style.height = cdiv.clientWidth / 1000 * 563 + "px";
+		if(canvas.width < 936) {
+			canvas.width = 936;
+			canvas.height = 936 / 1000 * 563;
+			canvas.setAttribute("style", "");
+			canvas.style.zoom = (cdiv.clientWidth / 936);
+		} else {
+
+		}
+		window.startGame = function() {
+			// $("#audio").attr("src", "media/jntm.m4a");
+			// audio.play();
+			window.cacheBallSpeed = parseInt($("#ballspeedset").val());
+			$("#ballspeedset").attr("disabled", "disabled");
+			_main.start();
+			setInterval(function() {
+				if(cxk_body == 1) {
+					_main.paddle.image.src = "images/paddle2_" + move_way + ".png";
+					cxk_body = 2;
+				} else if(cxk_body == 2) {
+					_main.paddle.image.src = "images/paddle3_" + move_way + ".png";
+					cxk_body = 3;
+				}else if(cxk_body == 4){
+					_main.paddle.image.src = "images/paddle4_" + move_way + ".png";
+					cxk_body = 3;
+				} else {
+					_main.paddle.image.src = "images/paddle_" + move_way + ".png";
+					cxk_body = 1;
+				}
+			}, 150);
+
+			setInterval(function() {
+				_main.ballshadow.y = 545;
+				_main.ballshadow.x = _main.ball.x;
+			}, 10);
+		}
+	</script>
+</html>
