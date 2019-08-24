@@ -4,6 +4,6 @@
 <br />
 Just a simple idea.
 <br />
-Twitter: [@xfy_yyz](https://twitter.com/xfy_yyz)
+Twitter: <a href="https://twitter.com/xfy_yyz" target="_blank">@xfy_yyz</a>
 <br />
 Commercial Affairs: <a href="mailto:yaozeye@outlook.com" target="_blank">yaozeye@outlook.com</a>
