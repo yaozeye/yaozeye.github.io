@@ -4,6 +4,6 @@
 <br />
 Just a simple idea.
 <br />
-Twitter: @xfy_yyz
+Twitter: [@xfy_yyz](https://twitter.com/xfy_yyz)
 <br />
-### Commercial Affairs: yaozeye@outlook.com
+Commercial Affairs: <a href="mailto:yaozeye@outlook.com" target="_blank">yaozeye@outlook.com</a>
