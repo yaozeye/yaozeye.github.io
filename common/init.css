@@ -3,7 +3,7 @@ body {
 	background: rgb(235,50,50); /*rgba(54, 180, 54, 1);*/
 	text-align: center;
 	text-decoration: none;
-	font-family: Century Gothic, Times New Roman, Arial, Yu Mincho, MS Pmincho, SimSun, MS Mincho, Georgia;
+	font-family: Century Gothic, Times New Roman, Source Serif, Source Serif Pro, Noto Serif, Arial, Source Sans, Source Sans Pro, Noto Sans, Yu Mincho, MS Pmincho, SimSun, MS Mincho, Georgia;
 	font-variant: normal;
 	font-size: 100%;
 	font-weight: 400;
@@ -26,7 +26,7 @@ img {
 #h-caps-red {
 	color: #C20C0C;
 	font-size: 2em;
-	font-family: Century Gothic, Times New Roman, Arial, Georgia, Times, Yu Mincho, MS Pmincho, SimSun;
+	font-family: Century Gothic, Times New Roman, Source Serif, Source Serif Pro, Noto Serif, Arial, Source Sans, Source Sans Pro, Noto Sans, Georgia, Times, Yu Mincho, MS Pmincho, SimSun;
 	font-variant: small-caps;
 }
 #copyright-white {
@@ -56,7 +56,7 @@ img {
 	background: #4B9EFF;
 	text-align: center;
 	text-decoration: none;
-	font-family: SimSun, Times New Roman, Arial, Yu Mincho, MS Pmincho, Georgia;
+	font-family: SimSun, Times New Roman, Source Serif, Source Serif Pro, Noto Serif, Arial, Source Sans, Source Sans Pro, Noto Sans, Yu Mincho, MS Pmincho, Georgia;
 	font-size: 200%;
 }
 #div-center {
