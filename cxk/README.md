@@ -1,8 +1,8 @@
 <img src="https://i.imgur.com/aoB8Er1.png" align=right />
 
-# CXK Play BasketBall
+# CXK Play Basketball
 
-This Project's name is "CXK Play BasketBall" Game，The original Project：[h5-game-blockBreaker](https://github.com/yangyunhe369/h5-game-blockBreaker)
+This Project's name is "CXK Play Basketball" Game，The original Project：[h5-game-blockBreaker](https://github.com/yangyunhe369/h5-game-blockBreaker)
 Translated and Redistributed by [Yaoze YE](https://github.com/yaozeye/)
 
 **Demo**：[https://yaozeye.github.io/cxk/](https://yaoozeye.github.io/cxk/)
@@ -13,9 +13,9 @@ Finally，If you like this game, please give me a star, thanks!
 
 ![](https://i.imgur.com/gVfLn4a.png)
 
-The game has several levels to choose from (Eeasy、Normal、Difficult、Super hard and the highest difficulty)
+The game has several levels to choose from (Easy、Normal、Difficult、Super hard and the highest difficulty)
 
-The highest difficulty's mode, Please ikun's don't try it lightly，Otherwise it might go crazy.(XD
+The highest difficulty's mode, Please ikun's don't try it lightly，Otherwise it might go crazy. (XD
 
 Wish you have a good game!
 
@@ -41,7 +41,7 @@ If so, you can try to solve it yourself or take a screenshot through the Issues 
 
 > __Ask：The map is displayed incorrectly or very strangely__
 
-Maybe Network Problem, try refreshing, or check the browser console for resource loading error messages.
+Maybe Network Problem, try a refresh or check the browser console for resource loading error messages.
 
 > __Ask：I do not respond by pressing the left and right arrow keys__
 
@@ -55,7 +55,7 @@ The performance of the device is too low, it is recommended to use a computer to
 
 Network Problem is either blocked by some browser plugins, or it may be that you don’t have any sounds or sound cards.
 
-> __Ask：How to turn off music on your phone__
+> __Ask：How to turn off the music on your phone__
 
 Press the phone's volume button to mute it.
 
