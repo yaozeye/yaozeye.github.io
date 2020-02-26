@@ -2,22 +2,22 @@
 
 # CXK Play Basketball
 
-This Project's name is "CXK Play Basketball" Game，The original Project：[h5-game-blockBreaker](https://github.com/yangyunhe369/h5-game-blockBreaker)
-Translated and Redistributed by [Yaoze YE](https://github.com/yaozeye/)
+This Project's name is "CXK Play Basketball" Game, The original Project: [h5-game-blockBreaker](https://github.com/yangyunhe369/h5-game-blockBreaker)
+Translated, Revised & Redistributed by [Yaoze YE](https://github.com/yaozeye/)
 
-**Demo**：[https://yaozeye.github.io/cxk/](https://yaoozeye.github.io/cxk/)
+**Demo**: [https://yaozeye.github.io/cxk/](https://yaoozeye.github.io/cxk/)
 
-Finally，If you like this game, please give me a star, thanks!
+If you like this project, you can star it, thx!
 
 ## Game Screenshots
 
 ![](https://i.imgur.com/gVfLn4a.png)
 
-The game has several levels to choose from (Easy、Normal、Difficult、Super hard and the highest difficulty)
+This game has several levels to choose from (Easy、Normal、Difficult、Super hard and the highest difficulty)
 
-The highest difficulty's mode, Please ikun's don't try it lightly，Otherwise it might go crazy. (XD
+The highest difficulty's mode, you'd better not try it casually, ikun's. Otherwise you're possibly gonna be crazy. : -)
 
-Wish you have a good game!
+Have a good time!
 
 ## How to experience
 
@@ -31,37 +31,37 @@ Browse your Homepage or use Browser opens `index.html` to play.
 
 ## Common problems
 
-If you encounter any problems, please try to refresh，else if refreshing can't solve the problem，Please Press Button F12 to open the browser console view to decide whether report errors or not.
+If you encounter any problems, please try to refresh, else if refreshing can't solve the problem, Please Press Button F12 to open the browser console view to decide whether report errors or not.
 
-If so, you can try to solve it yourself or take a screenshot through the Issues feedback, please provide information about the browser and the device, please follow the Issues specification.
+If so, you can try to solve it yourself or take a screenshot through the Issues feedback, please provide information about your browser and device details following the Issues specification.
 
-> __Ask：Does this game infringe on the portrait rights of others__
+> __Ask: Does this game infringe on the portrait rights of others__
 
 [Please see this note](about.md)
 
-> __Ask：The map is displayed incorrectly or very strangely__
+> __Ask: The map is displayed incorrect__
 
-Maybe Network Problem, try a refresh or check the browser console for resource loading error messages.
+Refresh the web page.
 
-> __Ask：I do not respond by pressing the left and right arrow keys__
+> __Ask: I do not respond by pressing the left and right arrow keys__
 
 Please use KEY A and KEY D
 
-> __Ask：I feel a little bit lag when I play this game__
+> __Ask: I feel a little bit lag playing it__
 
-The performance of the device is too low, it is recommended to use a computer to get the best experience, and it is recommended to use modern browsers such as Chrome and Firefox.
+You’d better buy a brand-new computer and enable the high performance GPU feature, also it is recommended to use more advanced browsers such as Google Chrome and Mozilla Firefox.
 
-> __Ask：I can't hear the sound__
+> __Ask: I can't hear the sound__
 
-Network Problem is either blocked by some browser plugins, or it may be that you don’t have any sounds or sound cards.
+Sound resource may be blocked by your browser, or you forgot to turn up the volume.
 
-> __Ask：How to turn off the music on your phone__
+> __Ask: How to turn off the music on your phone__
 
-Press the phone's volume button to mute it.
+Press the phone's volume \[-] button to mute it.
 
 ## Future plans
 
-I will try (but not necessarily) the following functions
+Maybe someday these features would be added: 
 
 - [ ] Increase archiving
 - [ ] Add more levels
