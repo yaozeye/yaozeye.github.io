@@ -3,8 +3,9 @@
 # CXK Play BasketBall
 
 This Project's name is "CXK Play BasketBall" Game，The original Project：[h5-game-blockBreaker](https://github.com/yangyunhe369/h5-game-blockBreaker)
+Translated and Redistributed by [Yaoze YE](https://github.com/yaozeye/)
 
-**Demo**：[https://cxk.ssrr.one/](https://cxk.ssrr.one/)
+**Demo**：[https://yaozeye.github.io/cxk/](https://yaoozeye.github.io/cxk/)
 
 Finally，If you like this game, please give me a star, thanks!
 
@@ -12,9 +13,9 @@ Finally，If you like this game, please give me a star, thanks!
 
 ![](https://i.imgur.com/gVfLn4a.png)
 
-The game has several levels to choose from (easy、normal、difficult、Super hard and The highest difficulty)
+The game has several levels to choose from (Eeasy、Normal、Difficult、Super hard and the highest difficulty)
 
-The highest difficulty's mode,Please ikun's don't try it lightly，Otherwise it might go crazy.(XD
+The highest difficulty's mode, Please ikun's don't try it lightly，Otherwise it might go crazy.(XD
 
 Wish you have a good game!
 
@@ -23,14 +24,14 @@ Wish you have a good game!
 You can play the demo or git clone this project to local
 
 ```bash
-git clone https://github.com/kasuganosoras/cxk-ball
+git clone https://github.com/yaozeye/yaozeye.github.io/tree/master/cxk/
 ```
 
 Browse your Homepage or use Browser opens `index.html` to play.
 
 ## Common problems
 
-If encounter any problems, please try to refresh，else if refresh can't slove problems，Please Press Button F12 to open the browser console view whether or not to report errors.
+If you encounter any problems, please try to refresh，else if refreshing can't solve the problem，Please Press Button F12 to open the browser console view to decide whether report errors or not.
 
 If so, you can try to solve it yourself or take a screenshot through the Issues feedback, please provide information about the browser and the device, please follow the Issues specification.
 
