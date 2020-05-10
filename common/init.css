@@ -3,7 +3,7 @@ body {
 	background: rgb(235,50,50); /*rgba(54, 180, 54, 1);*/
 	text-align: center;
 	text-decoration: none;
-	font-family: Source Sans, Source Sans Pro, Source Han Sans JP, Source Han Sans TW, Source Han Sans CN, Noto Sans, Source Serif, Source Serif Pro, Source Han Serif JP, Source Han Serif TW, Source Han Serif CN, Noto Serif, Times New Roman, Arial, Yu Mincho, MS Pmincho, SimSun, MS Mincho, Georgia;
+	font-family: Source Sans Pro, Source Han Sans JP, Source Han Sans TW, Source Han Sans CN, Source Sans, Noto Sans, Source Serif Pro, Source Han Serif JP, Source Han Serif TW, Source Han Serif CN, Source Serif, Noto Serif, Times New Roman, Arial, Yu Mincho, MS Pmincho, SimSun, MS Mincho, Georgia;
 	font-variant: normal;
 	font-size: 100%;
 	font-weight: 400;
@@ -26,7 +26,6 @@ img {
 #h-caps-red {
 	color: #C20C0C;
 	font-size: 2em;
-	font-family: Century Gothic, Times New Roman, Source Serif, Source Serif Pro, Noto Serif, Arial, Source Sans, Source Sans Pro, Noto Sans, Georgia, Times, Yu Mincho, MS Pmincho, SimSun;
 	font-variant: small-caps;
 }
 #copyright-white {
@@ -56,7 +55,7 @@ img {
 	background: #4B9EFF;
 	text-align: center;
 	text-decoration: none;
-	font-family: Source Han Serif CN, Source Han Serif JP, SimSun, Times New Roman, Source Serif, Source Serif Pro, Noto Serif, Arial, Source Sans, Source Sans Pro, Noto Sans, Yu Mincho, MS Pmincho, Georgia;
+	font-family: Source Han Serif CN, Source Han Serif JP, Source Serif, Noto Serif, Source Sans, Noto Sans, SimSun, Source Sans Pro, Source Serif Pro, Times New Roman, Arial, Yu Mincho, MS Pmincho, Georgia;
 	font-size: 200%;
 }
 #div-center {
