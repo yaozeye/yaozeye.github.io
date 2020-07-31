@@ -1,0 +1,39 @@
+body {
+	color: #000000;
+	background: #C0C0C0;
+	text-align: center;
+	text-decoration: none;
+	font-family: Source Sans Pro, Source Han Sans CN, Source Sans, Noto Sans, Source Serif Pro, Source Han Serif CN, Source Serif, Noto Serif, Times New Roman, Arial, Yu Mincho, MS Pmincho, SimSun, MS Mincho, Georgia;
+	font-variant: normal;
+	font-size: 100%;
+	font-weight: 400;
+}
+img {
+	border:none;
+}
+::-o-selection	{
+	color: #DDDDFF;
+	background: #FD3E4D;
+}
+::-moz-selection {
+	color: #DDDDFF;
+	background: #FD3E4D;
+}
+::-webkit-selection {
+	color: #DDDDFF;
+	background: #FD3E4D;
+}
+#copyright-white {
+	font-variant: normal;
+	font-size: 1.8em;
+	color: white;
+}
+#copyright-black {
+	font-variant: normal;
+	font-size: 1.8em;
+	color: black;
+}
+#div-center {
+	margin-right: auto;
+	margin-left: auto;
+}

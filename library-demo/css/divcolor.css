@@ -1,0 +1,12 @@
+div {
+width:8em;
+height:8em;
+background:#66CCFF;
+transition:width 1s;
+-moz-transition:width 4s;
+-webkit-transition:width 2s;
+-o-transition:width 8s;
+}
+div:hover {
+width:32em;
+}
