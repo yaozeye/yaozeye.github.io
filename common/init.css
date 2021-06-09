@@ -1,9 +1,9 @@
 body {
 	color: #640000;
-	background: #D6001C; /*#586069;*/ /*rgb(235,50,50);*/ /*rgba(54, 180, 54, 1);*/
+	background: #667FFF/*#D6001C;*/ /*#586069;*/ /*rgb(235,50,50);*/ /*rgba(54, 180, 54, 1);*/
 	text-align: center;
 	text-decoration: none;
-	font-family: Source Sans Pro, Source Han Sans JP, Source Han Sans TW, Source Han Sans CN, Source Sans, Noto Sans, Source Serif Pro, Source Han Serif JP, Source Han Serif TW, Source Han Serif CN, Source Serif, Noto Serif, Times New Roman, Arial, Yu Mincho, MS Pmincho, SimSun, MS Mincho, Georgia;
+	font-family: Source Sans Pro, Source Han Sans JP, Source Han Sans TW, Source Sans, Noto Sans, Source Serif Pro, Source Han Serif JP, Source Han Serif TW, Source Serif, Noto Serif, Times New Roman, Arial, Courier New, Brush Script MT;
 	font-variant: normal;
 	font-size: 100%;
 	font-weight: 400;
@@ -55,7 +55,7 @@ img {
 	background: #4B9EFF;
 	text-align: center;
 	text-decoration: none;
-	font-family: Source Han Serif CN, Source Han Serif JP, Source Serif, Noto Serif, Source Sans, Noto Sans, SimSun, Source Sans Pro, Source Serif Pro, Times New Roman, Arial, Yu Mincho, MS Pmincho, Georgia;
+	font-family: Source Han Serif CN, Source Han Serif JP, Source Han Serif TW, Source Serif Pro, Source Serif, Noto Serif, Source Sans Pro, Source Sans, Noto Sans, Times New Roman, Arial, Georgia;
 	font-size: 200%;
 }
 #div-center {
