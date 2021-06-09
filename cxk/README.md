@@ -1,5 +1,3 @@
-<img src="https://i.imgur.com/aoB8Er1.png" align=right />
-
 # CXK Play Basketball
 
 This Project's name is "CXK Play Basketball" Game, The original Project: [h5-game-blockBreaker](https://github.com/yangyunhe369/h5-game-blockBreaker) <br />
@@ -10,17 +8,17 @@ Translated, Revised & Redistributed by [Yaoze YE](https://github.com/yaozeye/)
 
 If you like this project, you can star it, thx!
 
-## Game Screenshots
+## Game Screenshot
 
 ![](https://i.imgur.com/gVfLn4a.png)
 
-This game has several levels to choose from (Easy、Normal、Difficult、Super hard and the highest difficulty)
+This game has several levels. (Easy、Normal、Difficult、Super hard and the highest difficulty)
 
-The highest difficulty's mode, you'd better not try it casually, ikun's. Otherwise you're possibly gonna be crazy. : -)
+The highest difficulty's mode, you'd better not try it casually, ikun's. Otherwise you're probably gonna be crazy. : -)
 
 Have a good time!
 
-## How to experience
+## How to enjoy this
 
 You can play the demo or git clone this project to local
 
@@ -42,33 +40,27 @@ If so, you can try to solve it yourself or take a screenshot through the Issues 
 
 > __Ask: The map is displayed incorrect__
 
-Refresh the web page.
+Refresh.
 
 > __Ask: I do not respond by pressing the left and right arrow keys__
 
 Please use KEY A and KEY D
 
-> __Ask: I feel a little bit lag playing it__
+> __Ask: I feel a little laggy playing it__
 
-You’d better buy a brand-new computer and enable the high performance GPU feature, also it is recommended to use more advanced browsers such as Google Chrome and Mozilla Firefox.
+You’d better buy a brand-new computer and enable the high performance GPU feature. Also it is recommended to use modern browsers such as Mozilla Firefox.
 
-> __Ask: I can't hear the sound__
+> __Ask: I can't hear any sound__
 
-Sound resource may be blocked by your browser, or you forgot to turn up the volume.
+Sound resources may be blocked by your browser, or you've forgot to turn up the volume.
 
-> __Ask: How to turn off the music on your phone__
+> __Ask: How to turn off the music__
 
-Press the phone's volume \[-] button to mute it.
+Mute the tab.
 
 ## Future plans
 
-Maybe someday these features would be added: 
-
-- [ ] Increase archiving
-- [ ] Add more levels
-- [ ] Increase multiplayer connectivity
-- [ ] Allow players to create maps themselves
-- [ ] Multi-person online custom server function
+No, negative.
 
 ## License
 
