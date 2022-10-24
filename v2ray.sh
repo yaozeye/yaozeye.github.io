@@ -852,7 +852,7 @@ Type=simple
 User=root
 #User=nobody
 NoNewPrivileges=true
-ExecStart=/usr/bin/v2ray/v2ray -config /etc/v2ray/config.json
+ExecStart=/usr/bin/v2ray/v2ray run -config /etc/v2ray/config.json
 Restart=on-failure
 
 [Install]
