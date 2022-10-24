@@ -110,7 +110,7 @@ needNginx() {
 }
 
 status() {
-    if [[ ! -f /usr/bin/v2ray/v2ray ]]; then
+    if [[ ! -f /usr/bin/v2ray ]]; then
         echo 0
         return
     fi
@@ -175,7 +175,7 @@ normalizeVersion() {
 
 # 1: new V2Ray. 0: no. 1: yes. 2: not installed. 3: check failed.
 getVersion() {
-    VER="$(/usr/bin/v2ray/v2ray -version 2>/dev/null)"
+    VER="$(/usr/bin/v2ray -version 2>/dev/null)"
     RETVAL=$?
     CUR_VER="$(normalizeVersion "$(echo "$VER" | head -n 1 | cut -d " " -f2)")"
     TAG_URL="${V6_PROXY}https://api.github.com/repos/v2fly/v2ray-core/releases/latest"
@@ -831,7 +831,7 @@ installV2ray() {
     unzip /tmp/v2ray/v2ray.zip -d /tmp/v2ray
     mkdir -p /usr/bin/v2ray
     cp /tmp/v2ray/v2ray /usr/bin/v2ray/; cp /tmp/v2ray/geo* /usr/bin/v2ray/;
-    chmod +x '/usr/bin/v2ray/v2ray' || {
+    chmod +x '/usr/bin/v2ray' || {
         colorEcho $RED " V2ray安装失败"
         exit 1
     }
@@ -852,7 +852,7 @@ Type=simple
 User=root
 #User=nobody
 NoNewPrivileges=true
-ExecStart=/usr/bin/v2ray/v2ray run -config /etc/v2ray/config.json
+ExecStart=/usr/bin/v2ray run -config /etc/v2ray/config.json
 Restart=on-failure
 
 [Install]
