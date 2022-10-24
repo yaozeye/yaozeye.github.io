@@ -179,7 +179,7 @@ getVersion() {
     RETVAL=$?
     CUR_VER="$(normalizeVersion "$(echo "$VER" | head -n 1 | cut -d " " -f2)")"
     TAG_URL="${V6_PROXY}https://api.github.com/repos/v2fly/v2ray-core/releases/latest"
-    NEW_VER="$(normalizeVersion "$(curl -s "${TAG_URL}" --connect-timeout 10| tr ',' '\n' | grep 'tag_name' | cut -d\" -f4)")"
+    NEW_VER="4.45.2"
     if [[ "$XTLS" = "true" ]]; then
         NEW_VER=v4.32.1
     fi
@@ -852,7 +852,7 @@ Type=simple
 User=root
 #User=nobody
 NoNewPrivileges=true
-ExecStart=/usr/bin/v2ray/v2ray run -config /etc/v2ray/config.json
+ExecStart=/usr/bin/v2ray/v2ray -config /etc/v2ray/config.json
 Restart=on-failure
 
 [Install]
