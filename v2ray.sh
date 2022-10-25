@@ -110,7 +110,7 @@ needNginx() {
 }
 
 status() {
-    if [[ ! -f /usr/bin/v2ray ]]; then
+    if [[ ! -f /usr/bin/v2ray/v2ray ]]; then
         echo 0
         return
     fi
@@ -175,11 +175,11 @@ normalizeVersion() {
 
 # 1: new V2Ray. 0: no. 1: yes. 2: not installed. 3: check failed.
 getVersion() {
-    VER="$(/usr/bin/v2ray -version 2>/dev/null)"
+    VER="$(/usr/bin/v2ray/v2ray -version 2>/dev/null)"
     RETVAL=$?
     CUR_VER="$(normalizeVersion "$(echo "$VER" | head -n 1 | cut -d " " -f2)")"
-    TAG_URL="${V6_PROXY}https://api.github.com/repos/v2fly/v2ray-core/releases/latest"
-    NEW_VER="v4.45.2"
+    TAG_URL="${V6_PROXY}https://api.github.com/repos/v2fly/v2ray-core/releases/69255693"
+    NEW_VER="$(normalizeVersion "$(curl -s "${TAG_URL}" --connect-timeout 10| tr ',' '\n' | grep 'tag_name' | cut -d\" -f4)")"
     if [[ "$XTLS" = "true" ]]; then
         NEW_VER=v4.32.1
     fi
@@ -399,7 +399,8 @@ getData() {
         echo "   2) 小说站(随机选择)"
         echo "   3) 美女站(https://imeizi.me)"
         echo "   4) 高清壁纸站(https://bing.imeizi.me)"
-        echo "   5) 自定义反代站点(需以http或者https开头)"
+        echo "   5) Microsoft JP (https://www.microsoft.com/ja-jp/)"
+        echo "   6) 自定义反代站点(需以http或者https开头)"
         read -p "  请选择伪装网站类型[默认:高清壁纸站]" answer
         if [[ -z "$answer" ]]; then
             PROXY_URL="https://bing.imeizi.me"
@@ -431,6 +432,9 @@ getData() {
                 PROXY_URL="https://bing.imeizi.me"
                 ;;
             5)
+                PROXY_URL="https://www.microsoft.com/ja-jp/"
+                ;;
+            6)
                 read -p " 请输入反代站点(以http或者https开头)：" PROXY_URL
                 if [[ -z "$PROXY_URL" ]]; then
                     colorEcho $RED " 请输入反代网站！"
@@ -820,7 +824,7 @@ installBBR() {
 installV2ray() {
     rm -rf /tmp/v2ray
     mkdir -p /tmp/v2ray
-    DOWNLOAD_LINK="${V6_PROXY}https://github.com/v2fly/v2ray-core/releases/download/4.45.2/v2ray-linux-$(archAffix).zip"
+    DOWNLOAD_LINK="${V6_PROXY}https://github.com/v2fly/v2ray-core/releases/download/${NEW_VER}/v2ray-linux-$(archAffix).zip"
     colorEcho $BLUE " 下载V2Ray: ${DOWNLOAD_LINK}"
     curl -L -H "Cache-Control: no-cache" -o /tmp/v2ray/v2ray.zip ${DOWNLOAD_LINK}
     if [ $? != 0 ];then
@@ -830,8 +834,8 @@ installV2ray() {
     mkdir -p '/etc/v2ray' '/var/log/v2ray' && \
     unzip /tmp/v2ray/v2ray.zip -d /tmp/v2ray
     mkdir -p /usr/bin/v2ray
-    cp /tmp/v2ray/v2ray /usr/bin/v2ray/; cp /tmp/v2ray/geo* /usr/bin/v2ray/;
-    chmod +x '/usr/bin/v2ray' || {
+    cp /tmp/v2ray/v2ctl /usr/bin/v2ray/; cp /tmp/v2ray/v2ray /usr/bin/v2ray/; cp /tmp/v2ray/geo* /usr/bin/v2ray/;
+    chmod +x '/usr/bin/v2ray/v2ray' '/usr/bin/v2ray/v2ctl' || {
         colorEcho $RED " V2ray安装失败"
         exit 1
     }
@@ -852,7 +856,7 @@ Type=simple
 User=root
 #User=nobody
 NoNewPrivileges=true
-ExecStart=/usr/bin/v2ray -config /etc/v2ray/config.json
+ExecStart=/usr/bin/v2ray/v2ray -config /etc/v2ray/config.json
 Restart=on-failure
 
 [Install]
