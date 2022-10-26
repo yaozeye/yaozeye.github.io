@@ -399,7 +399,7 @@ getData() {
         echo "   2) 小说站(随机选择)"
         echo "   3) 美女站(https://imeizi.me)"
         echo "   4) 高清壁纸站(https://bing.imeizi.me)"
-        echo "   5) Microsoft JP (https://www.microsoft.com/ja-jp/)"
+        echo "   5) Microsoft (https://www.microsoft.com)"
         echo "   6) 自定义反代站点(需以http或者https开头)"
         read -p "  请选择伪装网站类型[默认:高清壁纸站]" answer
         if [[ -z "$answer" ]]; then
