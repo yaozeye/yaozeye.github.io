@@ -432,7 +432,7 @@ getData() {
                 PROXY_URL="https://bing.imeizi.me"
                 ;;
             5)
-                PROXY_URL="https://www.microsoft.com/ja-jp/"
+                PROXY_URL="https://www.microsoft.com"
                 ;;
             6)
                 read -p " 请输入反代站点(以http或者https开头)：" PROXY_URL
