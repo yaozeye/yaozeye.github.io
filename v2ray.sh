@@ -481,9 +481,6 @@ installNginx() {
         if [[ "$PMT" = "yum" ]]; then
             $CMD_INSTALL epel-release
             if [[ "$?" != "0" ]]; then
-	    	if [[ "$releasever" = "8" ]]; then
-			releasever="8-stream"
-		fi
                 echo '[nginx-stable]
 name=nginx stable repo
 baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
