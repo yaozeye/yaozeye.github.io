@@ -401,7 +401,8 @@ getData() {
         echo "   4) 高清壁纸站(https://bing.imeizi.me)"
         echo "   5) Microsoft (https://www.microsoft.com)"
         echo "   6) Azure (https://azure.microsoft.com)"
-        echo "   7) 自定义反代站点(需以http或者https开头)"
+	echo "   7) Bing (https://bing.com)"
+        echo "   8) 自定义反代站点(需以http或者https开头)"
         read -p "  请选择伪装网站类型[默认:高清壁纸站]" answer
         if [[ -z "$answer" ]]; then
             PROXY_URL="https://bing.imeizi.me"
@@ -439,6 +440,9 @@ getData() {
                 PROXY_URL="https://azure.microsoft.com"
                 ;;
             7)
+                PROXY_URL="https://bing.com"
+                ;;
+            8)
                 read -p " 请输入反代站点(以http或者https开头)：" PROXY_URL
                 if [[ -z "$PROXY_URL" ]]; then
                     colorEcho $RED " 请输入反代网站！"
