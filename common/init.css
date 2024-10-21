@@ -17,7 +17,7 @@ body {
 	background: linear-gradient(#E66465, #9198E5); /*#667FFF;*/ /*#D6001C;*/ /*#586069;*/ /*rgb(235,50,50);*/ /*rgba(54, 180, 54, 1);*/
 	text-align: center;
 	text-decoration: none;
-	font-family: Honeymoon Variable, Honeymoon, Source Sans Pro, Source Han Sans JP, Source Han Sans TW, Source Sans, Noto Sans, Source Serif Pro, Source Han Serif JP, Source Han Serif TW, Source Serif, Noto Serif, Times New Roman, Arial, Courier New, Brush Script MT;
+	font-family: Source Sans Pro, Source Han Sans JP, Source Han Sans TW, Source Sans, Noto Sans, Source Serif Pro, Source Han Serif JP, Source Han Serif TW, Source Serif, Noto Serif, Times New Roman, Arial, Courier New, Brush Script MT;
 	font-variant: normal;
 	font-size: 100%;
 	font-weight: 400;
