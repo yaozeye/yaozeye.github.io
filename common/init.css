@@ -1,10 +1,8 @@
-// Variable font
 @font-face {
 	font-family: Honeymoon Variable;
 	src:	url(fonts/ABCHoneymoonVariableEdu-Regular.woff2) format('woff2-variations'),
 		url(fonts/ABCHoneymoonVariableEdu-Regular.woff) format('woff-variations');
 }
-// Fallback static font
 @font-face {
 	font-family: Honeymoon;
 	font-weight: normal;
