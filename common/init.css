@@ -9,9 +9,6 @@
 	src:	url(fonts/ABCHoneymoonEdu-Regular.woff2) format('woff2'),
 		url(fonts/ABCHoneymoonEdu-Regular.woff) format('woff');
 }
-/*
-body {font-family: "Honeymoon Variable", "Honeymoon", sans-serif;}
-*/
 body {
 	color: #640000; /*#F2DDCC*/
 	background: linear-gradient(#E66465, #9198E5); /*#667FFF;*/ /*#D6001C;*/ /*#586069;*/ /*rgb(235,50,50);*/ /*rgba(54, 180, 54, 1);*/
