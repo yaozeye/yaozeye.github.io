@@ -1,42 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1,maximum-scale=1"/>
-    <title>China</title>
-    <script type="text/javascript" src="lib/d3.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1" />
+  <title>China</title>
+  <script type="text/javascript" src="lib/d3.js"></script>
+  <style>
+    /* Page basics */
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-    <style>
-		body {
-			background: #fff;
-		}
-        path {
-            fill: #cbd6e5;
-            stroke: #7197c9;
-            stroke-width: 1px;
-        }
+    /* SVG layout */
+    svg {
+      display: block;
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+    }
 
-        path:hover {
-            fill: red;
-        }
-    </style>
+    path {
+      fill: #cbd6e5;
+      stroke: #7197c9;
+      stroke-width: 1px;
+      cursor: pointer;
+    }
+
+    path:hover {
+      fill: red;
+    }
+
+    /* Tooltip is removed from document flow so it won't push content */
+    #tooltip {
+      position: fixed;           /* fixed to viewport so it never affects layout */
+      top: 8px;                  /* appear at the top of the page */
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;      /* don't block mouse events */
+      background: rgba(0, 0, 0, 0.78);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 4px;
+      white-space: nowrap;
+      font-size: 13px;
+      line-height: 1;
+      opacity: 0;
+      transition: opacity 120ms ease;
+      z-index: 9999;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+
+    /* Visible state (use class toggle in JS) */
+    #tooltip.visible {
+      opacity: 1;
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Tooltip element lives outside normal flow so it won't move content -->
+  <div id="tooltip" role="status" aria-hidden="true"></div>
 
-<div >
-    <label>
-        <span id="tooltip"></span>
-    </label>
-</div>
-<script type="text/javascript">
+  <script type="text/javascript">
     var width = 960, height = 800;
 
     var svg = d3.select("body").append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .attr("preserveAspectRatio", "xMidYMid")
-            .attr("viewBox", "0 0 " + width + " " + height);
+      .attr("width", width)
+      .attr("height", height)
+      .attr("preserveAspectRatio", "xMidYMid")
+      .attr("viewBox", "0 0 " + width + " " + height);
 
     var tooltip = d3.select("#tooltip");
 
@@ -44,30 +79,30 @@
     var path = d3.geo.path().projection(proj);
 
     d3.json("data/cn.json", function (error, cn) {
-        svg.append("g")
-                .attr("class", "states")
-                .selectAll("path")
-                .data(cn.features)
-                .enter()
-                .append("path")
-                .on("mouseover", function (d) {
-                    tooltip.style("display", null);
-                    // name @ d.properties.name
-                    showText(d.id)
-                })
-                .on("mouseout", function () {
-                    tooltip.style("display", "none");
-                })
-                .attr("d", path)
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      svg.append("g")
+        .attr("class", "states")
+        .selectAll("path")
+        .data(cn.features)
+        .enter()
+        .append("path")
+        .attr("d", path)
+        .on("mouseover", function (d) {
+          // set text and show tooltip (no layout shift)
+          tooltip.text(d.id)
+                 .classed("visible", true)
+                 .attr("aria-hidden", "false");
+        })
+        .on("mouseout", function () {
+          // hide tooltip
+          tooltip.classed("visible", false)
+                 .attr("aria-hidden", "true");
+        });
     });
-
-    //处理要显示的文字
-    function showText(_id) {
-
-        tooltip.text(_id)
-    }
-</script><br />
-
+  </script>
 </body>
-
 </html>
