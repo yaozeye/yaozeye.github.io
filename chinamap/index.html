@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="initial-scale=1,maximum-scale=1" />
-  <title>China</title>
+  <title>Simplified Map of China</title>
   <script type="text/javascript" src="lib/d3.js"></script>
   <style>
     /* Page basics */
@@ -12,14 +12,47 @@
       margin: 0;
       background: #fff;
       font-family: Arial, Helvetica, sans-serif;
+      color: #222;
+    }
+
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    header h1 {
+      margin: 6px 0 2px 0;
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+
+    header p.lead {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #555;
     }
 
     /* SVG layout */
+    .map-wrap {
+      display: block;
+      width: 100%;
+      margin: 12px 0 24px 0;
+    }
+
     svg {
       display: block;
       width: 100%;
-      max-width: 960px;
-      margin: 0 auto;
+      height: auto;
+      max-height: 800px;
+      border-radius: 4px;
+      background: #f8fbff;
     }
 
     path {
@@ -27,16 +60,17 @@
       stroke: #7197c9;
       stroke-width: 1px;
       cursor: pointer;
+      transition: fill 120ms ease;
     }
 
     path:hover {
-      fill: red;
+      fill: #e04b4b;
     }
 
     /* Tooltip is removed from document flow so it won't push content */
     #tooltip {
-      position: fixed;           /* fixed to viewport so it never affects layout */
-      top: 8px;                  /* appear at the top of the page */
+      position: fixed;           /* removed from document flow */
+      top: 64px;                 /* below the header so it doesn't overlap the heading */
       left: 50%;
       transform: translateX(-50%);
       pointer-events: none;      /* don't block mouse events */
@@ -57,30 +91,91 @@
     #tooltip.visible {
       opacity: 1;
     }
+
+    /* Footer / footnotes */
+    footer {
+      margin-top: 18px;
+      padding-top: 12px;
+      border-top: 1px solid #e6e9ee;
+      color: #555;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    footer .footnote {
+      margin: 6px 0;
+    }
+
+    footer .footnote strong {
+      color: #333;
+    }
+
+    /* Small screens */
+    @media (max-width: 520px) {
+      header h1 { font-size: 1.25rem; }
+      #tooltip { top: 72px; font-size: 12px; }
+    }
   </style>
 </head>
 
 <body>
-  <!-- Tooltip element lives outside normal flow so it won't move content -->
-  <div id="tooltip" role="status" aria-hidden="true"></div>
+  <div class="page">
+    <header role="banner" aria-labelledby="page-title">
+      <h1 id="page-title">Simplified Map of China</h1>
+      <p class="lead">An interactive, simplified visualisation.  Hover a region to see its identifier.</p>
+    </header>
+
+    <!-- Tooltip element lives outside normal flow so it won't move content -->
+    <div id="tooltip" role="status" aria-hidden="true"></div>
+
+    <!-- SVG will be appended here by D3 -->
+    <div class="map-wrap" id="map-wrap" aria-live="polite"></div>
+
+    <footer role="contentinfo" aria-label="Footnotes and disclaimers">
+      <div class="footnote">
+        <strong>Footnote 1 — Simplified map:</strong>
+        This page shows a simplified, schematic representation of administrative boundaries for visualisation purposes only.
+      </div>
+      <div class="footnote">
+        <strong>Footnote 2 — Accuracy and use:</strong>
+        The map is not authoritative and should not be used for legal, navigational, or official decision-making.
+      </div>
+      <div class="footnote">
+        <strong>Footnote 3 — Data sources and rights:</strong>
+        Data and boundaries may be derived from third-party sources.  Users are responsible for verifying rights and accuracy before reuse.
+      </div>
+    </footer>
+  </div>
 
   <script type="text/javascript">
     var width = 960, height = 800;
 
-    var svg = d3.select("body").append("svg")
+    // Append SVG inside the map-wrap container
+    var svg = d3.select("#map-wrap").append("svg")
       .attr("width", width)
       .attr("height", height)
       .attr("preserveAspectRatio", "xMidYMid")
-      .attr("viewBox", "0 0 " + width + " " + height);
+      .attr("viewBox", "0 0 " + width + " " + height)
+      .attr("role", "img")
+      .attr("aria-label", "Simplified map of China");
 
     var tooltip = d3.select("#tooltip");
 
     var proj = d3.geo.mercator().center([105, 38]).scale(750).translate([width / 2, height / 2]);
     var path = d3.geo.path().projection(proj);
 
+    // Load GeoJSON (ensure data/cn.json is available)
     d3.json("data/cn.json", function (error, cn) {
       if (error) {
-        console.error(error);
+        console.error("Failed to load GeoJSON:", error);
+        // show a simple message in the SVG area
+        svg.append("text")
+           .attr("x", width / 2)
+           .attr("y", height / 2)
+           .attr("text-anchor", "middle")
+           .attr("fill", "#666")
+           .attr("font-size", "14px")
+           .text("Map data failed to load.");
         return;
       }
 
@@ -91,14 +186,23 @@
         .enter()
         .append("path")
         .attr("d", path)
+        .attr("tabindex", 0)
+        .attr("aria-label", function(d){ return d.properties && d.properties.name ? d.properties.name : ("Region " + (d.id || "")); })
         .on("mouseover", function (d) {
-          // set text and show tooltip (no layout shift)
-          tooltip.text(d.id)
+          tooltip.text(d.properties && d.properties.name ? d.properties.name : (d.id || ""))
                  .classed("visible", true)
                  .attr("aria-hidden", "false");
         })
         .on("mouseout", function () {
-          // hide tooltip
+          tooltip.classed("visible", false)
+                 .attr("aria-hidden", "true");
+        })
+        .on("focus", function(d) { // keyboard accessibility
+          tooltip.text(d.properties && d.properties.name ? d.properties.name : (d.id || ""))
+                 .classed("visible", true)
+                 .attr("aria-hidden", "false");
+        })
+        .on("blur", function() {
           tooltip.classed("visible", false)
                  .attr("aria-hidden", "true");
         });
