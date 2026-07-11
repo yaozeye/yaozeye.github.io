@@ -2,11 +2,6 @@
 
 This Project's name is "CXK Play Basketball" Game, The original Project: [h5-game-blockBreaker](https://github.com/yangyunhe369/h5-game-blockBreaker) <br />
 Distributed from [kasuganosoras](https://github.com/kasuganosoras/cxk-ball) <br />
-Translated, Revised & Redistributed by [Yaoze YE](https://github.com/yaozeye/)
-
-**Demo**: [https://yaozeye.github.io/cxk/](https://yaoozeye.github.io/cxk/)
-
-If you like this project, you can star it, thx!
 
 ## Game Screenshot
 
