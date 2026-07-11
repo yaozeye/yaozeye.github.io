@@ -39,7 +39,7 @@
       color: #555;
     }
 
-    /* SVG layout */
+    /* Map container */
     .map-wrap {
       display: block;
       width: 100%;
@@ -70,7 +70,7 @@
     /* Tooltip is removed from document flow so it won't push content */
     #tooltip {
       position: fixed;           /* removed from document flow */
-      top: 64px;                 /* below the header so it doesn't overlap the heading */
+      top: 72px;                 /* below the header so it doesn't overlap the heading */
       left: 50%;
       transform: translateX(-50%);
       pointer-events: none;      /* don't block mouse events */
@@ -113,7 +113,7 @@
     /* Small screens */
     @media (max-width: 520px) {
       header h1 { font-size: 1.25rem; }
-      #tooltip { top: 72px; font-size: 12px; }
+      #tooltip { top: 88px; font-size: 12px; }
     }
   </style>
 </head>
@@ -122,7 +122,7 @@
   <div class="page">
     <header role="banner" aria-labelledby="page-title">
       <h1 id="page-title">Simplified Map of China</h1>
-      <p class="lead">An interactive, simplified visualisation.  Hover a region to see its identifier.</p>
+      <p class="lead">An interactive, simplified visualization. Hover or focus a region to see its identifier.</p>
     </header>
 
     <!-- Tooltip element lives outside normal flow so it won't move content -->
@@ -134,7 +134,7 @@
     <footer role="contentinfo" aria-label="Footnotes and disclaimers">
       <div class="footnote">
         <strong>Footnote 1 — Simplified map:</strong>
-        This page shows a simplified, schematic representation of administrative boundaries for visualisation purposes only.
+        This page shows a simplified, schematic representation of administrative boundaries for visualization purposes only.
       </div>
       <div class="footnote">
         <strong>Footnote 2 — Accuracy and use:</strong>
@@ -142,7 +142,7 @@
       </div>
       <div class="footnote">
         <strong>Footnote 3 — Data sources and rights:</strong>
-        Data and boundaries may be derived from third-party sources.  Users are responsible for verifying rights and accuracy before reuse.
+        Data and boundaries may be derived from third-party sources. Users are responsible for verifying rights and accuracy before reuse.
       </div>
     </footer>
   </div>
@@ -168,7 +168,6 @@
     d3.json("data/cn.json", function (error, cn) {
       if (error) {
         console.error("Failed to load GeoJSON:", error);
-        // show a simple message in the SVG area
         svg.append("text")
            .attr("x", width / 2)
            .attr("y", height / 2)
@@ -187,9 +186,15 @@
         .append("path")
         .attr("d", path)
         .attr("tabindex", 0)
-        .attr("aria-label", function(d){ return d.properties && d.properties.name ? d.properties.name : ("Region " + (d.id || "")); })
+        .attr("aria-label", function(d){
+          // Prefer the original feature id (e.g. "新疆 Xinjiang") when present.
+          // Fallback to properties.name if id is missing.
+          return (d.id && String(d.id).trim()) ? String(d.id) : (d.properties && d.properties.name ? d.properties.name : "Region");
+        })
         .on("mouseover", function (d) {
-          tooltip.text(d.properties && d.properties.name ? d.properties.name : (d.id || ""))
+          // Show the original feature id if available (this preserves values like "新疆 Xinjiang")
+          var label = (d.id && String(d.id).trim()) ? String(d.id) : (d.properties && d.properties.name ? d.properties.name : "");
+          tooltip.text(label)
                  .classed("visible", true)
                  .attr("aria-hidden", "false");
         })
@@ -198,7 +203,8 @@
                  .attr("aria-hidden", "true");
         })
         .on("focus", function(d) { // keyboard accessibility
-          tooltip.text(d.properties && d.properties.name ? d.properties.name : (d.id || ""))
+          var label = (d.id && String(d.id).trim()) ? String(d.id) : (d.properties && d.properties.name ? d.properties.name : "");
+          tooltip.text(label)
                  .classed("visible", true)
                  .attr("aria-hidden", "false");
         })
