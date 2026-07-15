@@ -1,6 +1,6 @@
 # yaozeye.github.io
 ## Welcome
-### Licence: ``MIT``
+### License: ``MIT``
 <br />
 🦘🐨🇬🇧🇦🇺🇳🇿
 <br />
