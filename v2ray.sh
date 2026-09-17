@@ -1,6 +1,6 @@
 
 #!/bin/bash
-# v2ray一键安装脚本
+# v2ray one-click installation script
 # Author: hijk<https://hijk.art>
 
 
@@ -10,8 +10,8 @@ YELLOW="\033[33m"   # Warning message
 BLUE="\033[36m"     # Info message
 PLAIN='\033[0m'
 
-# 以下网站是随机从Google上找到的无广告小说网站，不喜欢请改成其他网址，以http或https开头
-# 搭建好后无法打开伪装域名，可能是反代小说网站挂了，请在网站留言，或者Github发issue，以便替换新的网站
+# The following sites are ad-free novel websites randomly found via Google. If you do not like them, change to another URL starting with http or https.
+# If you cannot open the disguise domain after setup, the reverse-proxy novel site may be down. Please leave a message on the website or open a GitHub issue so it can be replaced.
 SITES=(
 http://www.zhuizishu.com/
 http://xs.56dyc.com/
@@ -60,7 +60,7 @@ KCP="false"
 checkSystem() {
     result=$(id | awk '{print $1}')
     if [[ $result != "uid=0(root)" ]]; then
-        colorEcho $RED " 请以root身份执行该脚本"
+        colorEcho $RED " Please run this script as root"
         exit 1
     fi
 
@@ -68,7 +68,7 @@ checkSystem() {
     if [[ "$?" != "0" ]]; then
         res=`which apt 2>/dev/null`
         if [[ "$?" != "0" ]]; then
-            colorEcho $RED " 不受支持的Linux系统"
+            colorEcho $RED " Unsupported Linux system"
             exit 1
         fi
         PMT="apt"
@@ -83,7 +83,7 @@ checkSystem() {
     fi
     res=`which systemctl 2>/dev/null`
     if [[ "$?" != "0" ]]; then
-        colorEcho $RED " 系统版本过低，请升级到最新版本"
+        colorEcho $RED " System version is too old, please upgrade to the latest version"
         exit 1
     fi
 }
@@ -141,19 +141,19 @@ statusText() {
     res=`status`
     case $res in
         2)
-            echo -e ${GREEN}已安装${PLAIN} ${RED}未运行${PLAIN}
+            echo -e ${GREEN}Installed${PLAIN} ${RED}Not running${PLAIN}
             ;;
         3)
-            echo -e ${GREEN}已安装${PLAIN} ${GREEN}V2ray正在运行${PLAIN}
+            echo -e ${GREEN}Installed${PLAIN} ${GREEN}V2ray is running${PLAIN}
             ;;
         4)
-            echo -e ${GREEN}已安装${PLAIN} ${GREEN}V2ray正在运行${PLAIN}, ${RED}Nginx未运行${PLAIN}
+            echo -e ${GREEN}Installed${PLAIN} ${GREEN}V2ray is running${PLAIN}, ${RED}Nginx is not running${PLAIN}
             ;;
         5)
-            echo -e ${GREEN}已安装${PLAIN} ${GREEN}V2ray正在运行, Nginx正在运行${PLAIN}
+            echo -e ${GREEN}Installed${PLAIN} ${GREEN}V2ray is running, Nginx is running${PLAIN}
             ;;
         *)
-            echo -e ${RED}未安装${PLAIN}
+            echo -e ${RED}Not installed${PLAIN}
             ;;
     esac
 }
@@ -185,7 +185,7 @@ getVersion() {
     fi
 
     if [[ $? -ne 0 ]] || [[ $NEW_VER == "" ]]; then
-        colorEcho $RED " 检查V2ray版本信息失败，请检查网络"
+        colorEcho $RED " Failed to check V2ray version information, please check the network"
         return 3
     elif [[ $RETVAL -ne 0 ]];then
         return 2
@@ -234,7 +234,7 @@ archAffix(){
             echo 'ppc64'
         ;;
         *)
-            colorEcho $RED " 不支持的CPU架构！"
+            colorEcho $RED " Unsupported CPU architecture!"
             exit 1
         ;;
     esac
@@ -245,12 +245,12 @@ archAffix(){
 getData() {
     if [[ "$TLS" = "true" || "$XTLS" = "true" ]]; then
         echo ""
-        echo " V2ray一键脚本，运行之前请确认如下条件已经具备："
-        colorEcho ${YELLOW} "  1. 一个伪装域名"
-        colorEcho ${YELLOW} "  2. 伪装域名DNS解析指向当前服务器ip（${IP}）"
-        colorEcho ${BLUE} "  3. 如果/root目录下有 v2ray.pem 和 v2ray.key 证书密钥文件，无需理会条件2"
+        echo " V2ray one-click script. Before running, please make sure the following conditions are met:"
+        colorEcho ${YELLOW} "  1. A disguise domain"
+        colorEcho ${YELLOW} "  2. The disguise domain DNS resolves to the current server IP (${IP})"
+        colorEcho ${BLUE} "  3. If v2ray.pem and v2ray.key certificate key files exist in /root, condition 2 can be ignored"
         echo " "
-        read -p " 确认满足按y，按其他退出脚本：" answer
+        read -p " Press y to confirm, press anything else to exit the script: " answer
         if [[ "${answer,,}" != "y" ]]; then
             exit 0
         fi
@@ -258,26 +258,26 @@ getData() {
         echo ""
         while true
         do
-            read -p " 请输入伪装域名：" DOMAIN
+            read -p " Please enter the disguise domain: " DOMAIN
             if [[ -z "${DOMAIN}" ]]; then
-                colorEcho ${RED} " 域名输入错误，请重新输入！"
+                colorEcho ${RED} " Invalid domain input, please re-enter!"
             else
                 break
             fi
         done
         DOMAIN=${DOMAIN,,}
-        colorEcho ${BLUE}  " 伪装域名(host)：$DOMAIN"
+        colorEcho ${BLUE}  " Disguise domain (host):$DOMAIN"
 
         if [[ -f ~/v2ray.pem && -f ~/v2ray.key ]]; then
-            colorEcho ${BLUE}  " 检测到自有证书，将使用其部署"
+            colorEcho ${BLUE}  " Detected custom certificate, will use it for deployment"
             CERT_FILE="/etc/v2ray/${DOMAIN}.pem"
             KEY_FILE="/etc/v2ray/${DOMAIN}.key"
         else
             resolve=`curl -sL http://ip-api.com/json/${DOMAIN}`
             res=`echo -n ${resolve} | grep ${IP}`
             if [[ -z "${res}" ]]; then
-                colorEcho ${BLUE}  "${DOMAIN} 解析结果：${resolve}"
-                colorEcho ${RED}  " 域名未解析到当前服务器IP(${IP})!"
+                colorEcho ${BLUE}  "${DOMAIN} DNS result:${resolve}"
+                colorEcho ${RED}  " Domain does not resolve to the current server IP (${IP})!"
                 exit 1
             fi
         fi
@@ -286,38 +286,38 @@ getData() {
     echo ""
     if [[ "$(needNginx)" = "no" ]]; then
         if [[ "$TLS" = "true" ]]; then
-            read -p " 请输入v2ray监听端口[强烈建议443，默认443]：" PORT
+            read -p " Please enter V2ray listening port [strongly recommend 443, default 443]: " PORT
             [[ -z "${PORT}" ]] && PORT=443
         else
-            read -p " 请输入v2ray监听端口[100-65535的一个数字]：" PORT
+            read -p " Please enter V2ray listening port [a number between 100-65535]: " PORT
             [[ -z "${PORT}" ]] && PORT=`shuf -i200-65000 -n1`
             if [[ "${PORT:0:1}" = "0" ]]; then
-                colorEcho ${RED}  " 端口不能以0开头"
+                colorEcho ${RED}  " Port cannot start with 0"
                 exit 1
             fi
         fi
-        colorEcho ${BLUE}  " v2ray端口：$PORT"
+        colorEcho ${BLUE}  " v2ray port:$PORT"
     else
-        read -p " 请输入Nginx监听端口[100-65535的一个数字，默认443]：" PORT
+        read -p " Please enter Nginx listening port [a number between 100-65535, default 443]: " PORT
         [[ -z "${PORT}" ]] && PORT=443
         if [ "${PORT:0:1}" = "0" ]; then
-            colorEcho ${BLUE}  " 端口不能以0开头"
+            colorEcho ${BLUE}  " Port cannot start with 0"
             exit 1
         fi
-        colorEcho ${BLUE}  " Nginx端口：$PORT"
+        colorEcho ${BLUE}  " Nginx port:$PORT"
         V2PORT=`shuf -i10000-65000 -n1`
     fi
 
     if [[ "$KCP" = "true" ]]; then
         echo ""
-        colorEcho $BLUE " 请选择伪装类型："
-        echo "   1) 无"
-        echo "   2) BT下载"
-        echo "   3) 视频通话"
-        echo "   4) 微信视频通话"
+        colorEcho $BLUE " Please choose disguise type:"
+        echo "   1) None"
+        echo "   2) BT download"
+        echo "   3) Video call"
+        echo "   4) WeChat video call"
         echo "   5) dtls"
         echo "   6) wiregard"
-        read -p "  请选择伪装类型[默认：无]：" answer
+        read -p "  Please choose disguise type [default: None]: " answer
         case $answer in
             2)
                 HEADER_TYPE="utp"
@@ -338,23 +338,23 @@ getData() {
                 HEADER_TYPE="none"
                 ;;
         esac
-        colorEcho $BLUE " 伪装类型：$HEADER_TYPE"
+        colorEcho $BLUE " Disguise type:$HEADER_TYPE"
         SEED=`cat /proc/sys/kernel/random/uuid`
     fi
 
     if [[ "$TROJAN" = "true" ]]; then
         echo ""
-        read -p " 请设置trojan密码（不输则随机生成）:" PASSWORD
+        read -p " Please set trojan password (leave empty to generate randomly):" PASSWORD
         [[ -z "$PASSWORD" ]] && PASSWORD=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1`
-        colorEcho $BLUE " trojan密码：$PASSWORD"
+        colorEcho $BLUE " trojan password:$PASSWORD"
     fi
 
     if [[ "$XTLS" = "true" ]]; then
         echo ""
-        colorEcho $BLUE " 请选择流控模式:" 
-        echo -e "   1) xtls-rprx-direct [$RED推荐$PLAIN]"
+        colorEcho $BLUE " Please choose flow-control mode:" 
+        echo -e "   1) xtls-rprx-direct [$REDRecommended$PLAIN]"
         echo "   2) xtls-rprx-origin"
-        read -p "  请选择流控模式[默认:direct]" answer
+        read -p "  Please choose flow-control mode [default: direct]" answer
         [[ -z "$answer" ]] && answer=1
         case $answer in
             1)
@@ -364,46 +364,46 @@ getData() {
                 FLOW="xtls-rprx-origin"
                 ;;
             *)
-                colorEcho $RED " 无效选项，使用默认的xtls-rprx-direct"
+                colorEcho $RED " Invalid option, using default xtls-rprx-direct"
                 FLOW="xtls-rprx-direct"
                 ;;
         esac
-        colorEcho $BLUE " 流控模式：$FLOW"
+        colorEcho $BLUE " Flow-control mode:$FLOW"
     fi
 
     if [[ "${WS}" = "true" ]]; then
         echo ""
         while true
         do
-            read -p " 请输入伪装路径，以/开头(不懂请直接回车)：" WSPATH
+            read -p " Please enter disguise path, starting with / (press Enter directly if unsure): " WSPATH
             if [[ -z "${WSPATH}" ]]; then
                 len=`shuf -i5-12 -n1`
                 ws=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w $len | head -n 1`
                 WSPATH="/$ws"
                 break
             elif [[ "${WSPATH:0:1}" != "/" ]]; then
-                colorEcho ${RED}  " 伪装路径必须以/开头！"
+                colorEcho ${RED}  " Disguise path must start with /!"
             elif [[ "${WSPATH}" = "/" ]]; then
-                colorEcho ${RED}   " 不能使用根路径！"
+                colorEcho ${RED}   " Root path cannot be used!"
             else
                 break
             fi
         done
-        colorEcho ${BLUE}  " ws路径：$WSPATH"
+        colorEcho ${BLUE}  " ws path:$WSPATH"
     fi
 
     if [[ "$TLS" = "true" || "$XTLS" = "true" ]]; then
         echo ""
-        colorEcho $BLUE " 请选择伪装站类型:"
-        echo "   1) 静态网站(位于/usr/share/nginx/html)"
-        echo "   2) 小说站(随机选择)"
-        echo "   3) 美女站(https://imeizi.me)"
-        echo "   4) 高清壁纸站(https://bing.imeizi.me)"
+        colorEcho $BLUE " Please choose disguise site type:"
+        echo "   1) Static site (located at /usr/share/nginx/html)"
+        echo "   2) Novel site (randomly selected)"
+        echo "   3) Beauty site (https://imeizi.me)"
+        echo "   4) HD wallpaper site (https://bing.imeizi.me)"
         echo "   5) Microsoft (https://www.microsoft.com)"
         echo "   6) Azure (https://azure.microsoft.com)"
 	echo "   7) Bing (https://bing.com)"
-        echo "   8) 自定义反代站点(需以http或者https开头)"
-        read -p "  请选择伪装网站类型[默认:高清壁纸站]" answer
+        echo "   8) Custom reverse-proxy site (must start with http or https)"
+        read -p "  Please choose disguise site type [default: HD wallpaper site]" answer
         if [[ -z "$answer" ]]; then
             PROXY_URL="https://bing.imeizi.me"
         else
@@ -443,28 +443,28 @@ getData() {
                 PROXY_URL="https://bing.com"
                 ;;
             8)
-                read -p " 请输入反代站点(以http或者https开头)：" PROXY_URL
+                read -p " Please enter reverse-proxy site (starting with http or https): " PROXY_URL
                 if [[ -z "$PROXY_URL" ]]; then
-                    colorEcho $RED " 请输入反代网站！"
+                    colorEcho $RED " Please enter reverse-proxy site!"
                     exit 1
                 elif [[ "${PROXY_URL:0:4}" != "http" ]]; then
-                    colorEcho $RED " 反代网站必须以http或https开头！"
+                    colorEcho $RED " Reverse-proxy site must start with http or https!"
                     exit 1
                 fi
                 ;;
             *)
-                colorEcho $RED " 请输入正确的选项！"
+                colorEcho $RED " Please enter a valid option!"
                 exit 1
             esac
         fi
         REMOTE_HOST=`echo ${PROXY_URL} | cut -d/ -f3`
-        colorEcho $BLUE " 伪装网站：$PROXY_URL"
+        colorEcho $BLUE " Disguise site:$PROXY_URL"
 
         echo ""
-        colorEcho $BLUE "  是否允许搜索引擎爬取网站？[默认：不允许]"
-        echo "    y)允许，会有更多ip请求网站，但会消耗一些流量，vps流量充足情况下推荐使用"
-        echo "    n)不允许，爬虫不会访问网站，访问ip比较单一，但能节省vps流量"
-        read -p "  请选择：[y/n]" answer
+        colorEcho $BLUE "  Allow search engines to crawl the website? [default: not allowed]"
+        echo "    y) Allow. More IPs will request the website, but it consumes more traffic. Recommended if VPS traffic is sufficient."
+        echo "    n) Disallow. Crawlers will not access the website; visitor IPs are less diverse, but VPS traffic is saved."
+        read -p "  Please choose: [y/n]" answer
         if [[ -z "$answer" ]]; then
             ALLOW_SPIDER="n"
         elif [[ "${answer,,}" = "y" ]]; then
@@ -472,19 +472,19 @@ getData() {
         else
             ALLOW_SPIDER="n"
         fi
-        colorEcho $BLUE " 允许搜索引擎：$ALLOW_SPIDER"
+        colorEcho $BLUE " Allow search engines:$ALLOW_SPIDER"
     fi
 
     echo ""
-    read -p " 是否安装BBR(默认安装)?[y/n]:" NEED_BBR
+    read -p " Install BBR (default: install)? [y/n]:" NEED_BBR
     [[ -z "$NEED_BBR" ]] && NEED_BBR=y
     [[ "$NEED_BBR" = "Y" ]] && NEED_BBR=y
-    colorEcho $BLUE " 安装BBR：$NEED_BBR"
+    colorEcho $BLUE " Install BBR:$NEED_BBR"
 }
 
 installNginx() {
     echo ""
-    colorEcho $BLUE " 安装nginx..."
+    colorEcho $BLUE " Installing nginx..."
     if [[ "$BT" = "false" ]]; then
         if [[ "$PMT" = "yum" ]]; then
             $CMD_INSTALL epel-release
@@ -500,14 +500,14 @@ module_hotfixes=true' > /etc/yum.repos.d/nginx.repo
         fi
         $CMD_INSTALL nginx
         if [[ "$?" != "0" ]]; then
-            colorEcho $RED " Nginx安装失败，请到 https://hijk.art 反馈"
+            colorEcho $RED " Nginx installation failed, please report at https://hijk.art"
             exit 1
         fi
         systemctl enable nginx
     else
         res=`which nginx 2>/dev/null`
         if [[ "$?" != "0" ]]; then
-            colorEcho $RED " 您安装了宝塔，请在宝塔后台安装nginx后再运行本脚本"
+            colorEcho $RED " BaoTa panel detected. Please install nginx in BaoTa first, then run this script again"
             exit 1
         fi
     fi
@@ -539,8 +539,8 @@ getCert() {
         sleep 2
         res=`netstat -ntlp| grep -E ':80 |:443 '`
         if [[ "${res}" != "" ]]; then
-            colorEcho ${RED}  " 其他进程占用了80或443端口，请先关闭再运行一键脚本"
-            echo " 端口占用信息如下："
+            colorEcho ${RED}  " Ports 80 or 443 are occupied by another process. Please stop it before running the one-click script"
+            echo " Port usage details are as follows:"
             echo ${res}
             exit 1
         fi
@@ -565,7 +565,7 @@ getCert() {
             ~/.acme.sh/acme.sh   --issue -d $DOMAIN --keylength ec-256 --pre-hook "nginx -s stop || { echo -n ''; }" --post-hook "nginx -c /www/server/nginx/conf/nginx.conf || { echo -n ''; }"  --standalone
         fi
         [[ -f ~/.acme.sh/${DOMAIN}_ecc/ca.cer ]] || {
-            colorEcho $RED " 获取证书失败，请复制上面的红色文字到 https://hijk.art 反馈"
+            colorEcho $RED " Failed to obtain certificate. Please copy the red text above and report it at https://hijk.art"
             exit 1
         }
         CERT_FILE="/etc/v2ray/${DOMAIN}.pem"
@@ -575,7 +575,7 @@ getCert() {
             --fullchain-file $CERT_FILE \
             --reloadcmd     "service nginx force-reload"
         [[ -f $CERT_FILE && -f $KEY_FILE ]] || {
-            colorEcho $RED " 获取证书失败，请到 https://hijk.art 反馈"
+            colorEcho $RED " Failed to obtain certificate, please report at https://hijk.art"
             exit 1
         }
     else
@@ -672,7 +672,7 @@ server {
     server_name ${DOMAIN};
     charset utf-8;
 
-    # ssl配置
+    # SSL configuration
     ssl_protocols TLSv1.1 TLSv1.2;
     ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
     ssl_ecdh_curve secp384r1;
@@ -789,13 +789,13 @@ installBBR() {
     fi
     result=$(lsmod | grep bbr)
     if [[ "$result" != "" ]]; then
-        colorEcho $BLUE " BBR模块已安装"
+        colorEcho $BLUE " BBR module installed"
         INSTALL_BBR=false
         return
     fi
     res=`hostnamectl | grep -i openvz`
     if [[ "$res" != "" ]]; then
-        colorEcho $BLUE " openvz机器，跳过安装"
+        colorEcho $BLUE " OpenVZ machine detected, skipping installation"
         INSTALL_BBR=false
         return
     fi
@@ -805,12 +805,12 @@ installBBR() {
     sysctl -p
     result=$(lsmod | grep bbr)
     if [[ "$result" != "" ]]; then
-        colorEcho $GREEN " BBR模块已启用"
+        colorEcho $GREEN " BBR module has been enabled"
         INSTALL_BBR=false
         return
     fi
 
-    colorEcho $BLUE " 安装BBR模块..."
+    colorEcho $BLUE " Installing BBR module..."
     if [[ "$PMT" = "yum" ]]; then
         if [[ "$V6_PROXY" = "" ]]; then
             rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
@@ -833,10 +833,10 @@ installV2ray() {
     rm -rf /tmp/v2ray
     mkdir -p /tmp/v2ray
     DOWNLOAD_LINK="${V6_PROXY}https://github.com/v2fly/v2ray-core/releases/download/${NEW_VER}/v2ray-linux-$(archAffix).zip"
-    colorEcho $BLUE " 下载V2Ray: ${DOWNLOAD_LINK}"
+    colorEcho $BLUE " Downloading V2Ray: ${DOWNLOAD_LINK}"
     curl -L -H "Cache-Control: no-cache" -o /tmp/v2ray/v2ray.zip ${DOWNLOAD_LINK}
     if [ $? != 0 ];then
-        colorEcho $RED " 下载V2ray文件失败，请检查服务器网络设置"
+        colorEcho $RED " Failed to download V2ray files, please check server network settings"
         exit 1
     fi
     mkdir -p '/etc/v2ray' '/var/log/v2ray' && \
@@ -844,7 +844,7 @@ installV2ray() {
     mkdir -p /usr/bin/v2ray
     cp /tmp/v2ray/v2ctl /usr/bin/v2ray/; cp /tmp/v2ray/v2ray /usr/bin/v2ray/; cp /tmp/v2ray/geo* /usr/bin/v2ray/;
     chmod +x '/usr/bin/v2ray/v2ray' '/usr/bin/v2ray/v2ctl' || {
-        colorEcho $RED " V2ray安装失败"
+        colorEcho $RED " V2ray installation failed"
         exit 1
     }
 
@@ -1382,7 +1382,7 @@ install() {
     fi
     res=`which unzip 2>/dev/null`
     if [[ $? -ne 0 ]]; then
-        colorEcho $RED " unzip安装失败，请检查网络"
+        colorEcho $RED " unzip installation failed, please check the network"
         exit 1
     fi
 
@@ -1393,15 +1393,15 @@ install() {
     fi
     configNginx
 
-    colorEcho $BLUE " 安装V2ray..."
+    colorEcho $BLUE " Installing V2ray..."
     getVersion
     RETVAL="$?"
     if [[ $RETVAL == 0 ]]; then
-        colorEcho $BLUE " V2ray最新版 ${CUR_VER} 已经安装"
+        colorEcho $BLUE " Latest V2ray version ${CUR_VER} is already installed"
     elif [[ $RETVAL == 3 ]]; then
         exit 1
     else
-        colorEcho $BLUE " 安装V2Ray ${NEW_VER} ，架构$(archAffix)"
+        colorEcho $BLUE " Installing V2Ray ${NEW_VER}, architecture $(archAffix)"
         installV2ray
     fi
 
@@ -1419,9 +1419,9 @@ install() {
 bbrReboot() {
     if [[ "${INSTALL_BBR}" == "true" ]]; then
         echo  
-        echo " 为使BBR模块生效，系统将在30秒后重启"
+        echo " To make the BBR module take effect, the system will reboot in 30 seconds"
         echo  
-        echo -e " 您可以按 ctrl + c 取消重启，稍后输入 ${RED}reboot${PLAIN} 重启系统"
+        echo -e " You can press ctrl + c to cancel reboot, then run ${RED}reboot${PLAIN} later to restart the system"
         sleep 30
         reboot
     fi
@@ -1430,35 +1430,35 @@ bbrReboot() {
 update() {
     res=`status`
     if [[ $res -lt 2 ]]; then
-        colorEcho $RED " V2ray未安装，请先安装！"
+        colorEcho $RED " V2ray is not installed, please install it first!"
         return
     fi
 
     getVersion
     RETVAL="$?"
     if [[ $RETVAL == 0 ]]; then
-        colorEcho $BLUE " V2ray最新版 ${CUR_VER} 已经安装"
+        colorEcho $BLUE " Latest V2ray version ${CUR_VER} is already installed"
     elif [[ $RETVAL == 3 ]]; then
         exit 1
     else
-        colorEcho $BLUE " 安装V2Ray ${NEW_VER} ，架构$(archAffix)"
+        colorEcho $BLUE " Installing V2Ray ${NEW_VER}, architecture $(archAffix)"
         installV2ray
         stop
         start
 
-        colorEcho $GREEN " 最新版V2ray安装成功！"
+        colorEcho $GREEN " Latest V2ray installed successfully!"
     fi
 }
 
 uninstall() {
     res=`status`
     if [[ $res -lt 2 ]]; then
-        colorEcho $RED " V2ray未安装，请先安装！"
+        colorEcho $RED " V2ray is not installed, please install it first!"
         return
     fi
 
     echo ""
-    read -p " 确定卸载V2ray？[y/n]：" answer
+    read -p " Confirm uninstall V2ray? [y/n]: " answer
     if [[ "${answer,,}" = "y" ]]; then
         domain=`grep Host $CONFIG_FILE | cut -d: -f2 | tr -d \",' '`
         if [[ "$domain" = "" ]]; then
@@ -1486,14 +1486,14 @@ uninstall() {
             rm -rf $NGINX_CONF_PATH${domain}.conf
         fi
         [[ -f ~/.acme.sh/acme.sh ]] && ~/.acme.sh/acme.sh --uninstall
-        colorEcho $GREEN " V2ray卸载成功"
+        colorEcho $GREEN " V2ray uninstalled successfully"
     fi
 }
 
 start() {
     res=`status`
     if [[ $res -lt 2 ]]; then
-        colorEcho $RED " V2ray未安装，请先安装！"
+        colorEcho $RED " V2ray is not installed, please install it first!"
         return
     fi
     stopNginx
@@ -1503,23 +1503,23 @@ start() {
     port=`grep port $CONFIG_FILE| head -n 1| cut -d: -f2| tr -d \",' '`
     res=`ss -nutlp| grep ${port} | grep -i v2ray`
     if [[ "$res" = "" ]]; then
-        colorEcho $RED " v2ray启动失败，请检查日志或查看端口是否被占用！"
+        colorEcho $RED " v2ray failed to start, please check logs or whether the port is occupied!"
     else
-        colorEcho $BLUE " v2ray启动成功"
+        colorEcho $BLUE " v2ray started successfully"
     fi
 }
 
 stop() {
     stopNginx
     systemctl stop v2ray
-    colorEcho $BLUE " V2ray停止成功"
+    colorEcho $BLUE " V2ray stopped successfully"
 }
 
 
 restart() {
     res=`status`
     if [[ $res -lt 2 ]]; then
-        colorEcho $RED " V2ray未安装，请先安装！"
+        colorEcho $RED " V2ray is not installed, please install it first!"
         return
     fi
 
@@ -1581,7 +1581,7 @@ getConfigFileInfo() {
             xtls="true"
             flow=`grep flow $CONFIG_FILE | cut -d: -f2 | tr -d \",' '`
         else
-            flow="无"
+            flow="None"
         fi
     fi
 }
@@ -1604,41 +1604,41 @@ outputVmess() {
     link="vmess://${link}"
 
     echo -e "   ${BLUE}IP(address): ${PLAIN} ${RED}${IP}${PLAIN}"
-    echo -e "   ${BLUE}端口(port)：${PLAIN}${RED}${port}${PLAIN}"
-    echo -e "   ${BLUE}id(uuid)：${PLAIN}${RED}${uid}${PLAIN}"
-    echo -e "   ${BLUE}额外id(alterid)：${PLAIN} ${RED}${alterid}${PLAIN}"
-    echo -e "   ${BLUE}加密方式(security)：${PLAIN} ${RED}auto${PLAIN}"
-    echo -e "   ${BLUE}传输协议(network)：${PLAIN} ${RED}${network}${PLAIN}" 
+    echo -e "   ${BLUE}Port (port):${PLAIN}${RED}${port}${PLAIN}"
+    echo -e "   ${BLUE}id(uuid):${PLAIN}${RED}${uid}${PLAIN}"
+    echo -e "   ${BLUE}AlterId (alterid):${PLAIN} ${RED}${alterid}${PLAIN}"
+    echo -e "   ${BLUE}Encryption (security):${PLAIN} ${RED}auto${PLAIN}"
+    echo -e "   ${BLUE}Transport protocol (network):${PLAIN} ${RED}${network}${PLAIN}" 
     echo  
-    echo -e "   ${BLUE}vmess链接:${PLAIN} $RED$link$PLAIN"
+    echo -e "   ${BLUE}vmess link:${PLAIN} $RED$link$PLAIN"
 }
 
 outputVmessKCP() {
     echo -e "   ${BLUE}IP(address): ${PLAIN} ${RED}${IP}${PLAIN}"
-    echo -e "   ${BLUE}端口(port)：${PLAIN}${RED}${port}${PLAIN}"
-    echo -e "   ${BLUE}id(uuid)：${PLAIN}${RED}${uid}${PLAIN}"
-    echo -e "   ${BLUE}额外id(alterid)：${PLAIN} ${RED}${alterid}${PLAIN}"
-    echo -e "   ${BLUE}加密方式(security)：${PLAIN} ${RED}auto${PLAIN}"
-    echo -e "   ${BLUE}传输协议(network)：${PLAIN} ${RED}${network}${PLAIN}"
-    echo -e "   ${BLUE}伪装类型(type)：${PLAIN} ${RED}${type}${PLAIN}"
-    echo -e "   ${BLUE}mkcp seed：${PLAIN} ${RED}${seed}${PLAIN}" 
+    echo -e "   ${BLUE}Port (port):${PLAIN}${RED}${port}${PLAIN}"
+    echo -e "   ${BLUE}id(uuid):${PLAIN}${RED}${uid}${PLAIN}"
+    echo -e "   ${BLUE}AlterId (alterid):${PLAIN} ${RED}${alterid}${PLAIN}"
+    echo -e "   ${BLUE}Encryption (security):${PLAIN} ${RED}auto${PLAIN}"
+    echo -e "   ${BLUE}Transport protocol (network):${PLAIN} ${RED}${network}${PLAIN}"
+    echo -e "   ${BLUE}Disguise type (type):${PLAIN} ${RED}${type}${PLAIN}"
+    echo -e "   ${BLUE}mkcp seed:${PLAIN} ${RED}${seed}${PLAIN}" 
 }
 
 outputTrojan() {
     if [[ "$xtls" = "true" ]]; then
-        echo -e "   ${BLUE}IP/域名(address): ${PLAIN} ${RED}${domain}${PLAIN}"
-        echo -e "   ${BLUE}端口(port)：${PLAIN}${RED}${port}${PLAIN}"
-        echo -e "   ${BLUE}密码(password)：${PLAIN}${RED}${password}${PLAIN}"
-        echo -e "   ${BLUE}流控(flow)：${PLAIN}$RED$flow${PLAIN}"
-        echo -e "   ${BLUE}加密(encryption)：${PLAIN} ${RED}none${PLAIN}"
-        echo -e "   ${BLUE}传输协议(network)：${PLAIN} ${RED}${network}${PLAIN}" 
-        echo -e "   ${BLUE}底层安全传输(tls)：${PLAIN}${RED}XTLS${PLAIN}"
+        echo -e "   ${BLUE}IP/domain (address): ${PLAIN} ${RED}${domain}${PLAIN}"
+        echo -e "   ${BLUE}Port (port):${PLAIN}${RED}${port}${PLAIN}"
+        echo -e "   ${BLUE}Password (password):${PLAIN}${RED}${password}${PLAIN}"
+        echo -e "   ${BLUE}Flow control (flow):${PLAIN}$RED$flow${PLAIN}"
+        echo -e "   ${BLUE}Encryption (encryption):${PLAIN} ${RED}none${PLAIN}"
+        echo -e "   ${BLUE}Transport protocol (network):${PLAIN} ${RED}${network}${PLAIN}" 
+        echo -e "   ${BLUE}Underlying secure transport (tls):${PLAIN}${RED}XTLS${PLAIN}"
     else
-        echo -e "   ${BLUE}IP/域名(address): ${PLAIN} ${RED}${domain}${PLAIN}"
-        echo -e "   ${BLUE}端口(port)：${PLAIN}${RED}${port}${PLAIN}"
-        echo -e "   ${BLUE}密码(password)：${PLAIN}${RED}${password}${PLAIN}"
-        echo -e "   ${BLUE}传输协议(network)：${PLAIN} ${RED}${network}${PLAIN}" 
-        echo -e "   ${BLUE}底层安全传输(tls)：${PLAIN}${RED}TLS${PLAIN}"
+        echo -e "   ${BLUE}IP/domain (address): ${PLAIN} ${RED}${domain}${PLAIN}"
+        echo -e "   ${BLUE}Port (port):${PLAIN}${RED}${port}${PLAIN}"
+        echo -e "   ${BLUE}Password (password):${PLAIN}${RED}${password}${PLAIN}"
+        echo -e "   ${BLUE}Transport protocol (network):${PLAIN} ${RED}${network}${PLAIN}" 
+        echo -e "   ${BLUE}Underlying secure transport (tls):${PLAIN}${RED}TLS${PLAIN}"
     fi
 }
 
@@ -1659,15 +1659,15 @@ outputVmessTLS() {
     link=`echo -n ${raw} | base64 -w 0`
     link="vmess://${link}"
     echo -e "   ${BLUE}IP(address): ${PLAIN} ${RED}${IP}${PLAIN}"
-    echo -e "   ${BLUE}端口(port)：${PLAIN}${RED}${port}${PLAIN}"
-    echo -e "   ${BLUE}id(uuid)：${PLAIN}${RED}${uid}${PLAIN}"
-    echo -e "   ${BLUE}额外id(alterid)：${PLAIN} ${RED}${alterid}${PLAIN}"
-    echo -e "   ${BLUE}加密方式(security)：${PLAIN} ${RED}none${PLAIN}"
-    echo -e "   ${BLUE}传输协议(network)：${PLAIN} ${RED}${network}${PLAIN}" 
-    echo -e "   ${BLUE}伪装域名/主机名(host)/SNI/peer名称：${PLAIN}${RED}${domain}${PLAIN}"
-    echo -e "   ${BLUE}底层安全传输(tls)：${PLAIN}${RED}TLS${PLAIN}"
+    echo -e "   ${BLUE}Port (port):${PLAIN}${RED}${port}${PLAIN}"
+    echo -e "   ${BLUE}id(uuid):${PLAIN}${RED}${uid}${PLAIN}"
+    echo -e "   ${BLUE}AlterId (alterid):${PLAIN} ${RED}${alterid}${PLAIN}"
+    echo -e "   ${BLUE}Encryption (security):${PLAIN} ${RED}none${PLAIN}"
+    echo -e "   ${BLUE}Transport protocol (network):${PLAIN} ${RED}${network}${PLAIN}" 
+    echo -e "   ${BLUE}Disguise domain/hostname (host)/SNI/peer name:${PLAIN}${RED}${domain}${PLAIN}"
+    echo -e "   ${BLUE}Underlying secure transport (tls):${PLAIN}${RED}TLS${PLAIN}"
     echo  
-    echo -e "   ${BLUE}vmess链接: ${PLAIN}$RED$link$PLAIN"
+    echo -e "   ${BLUE}vmess link: ${PLAIN}$RED$link$PLAIN"
 }
 
 outputVmessWS() {
@@ -1688,35 +1688,35 @@ outputVmessWS() {
     link="vmess://${link}"
 
     echo -e "   ${BLUE}IP(address): ${PLAIN} ${RED}${IP}${PLAIN}"
-    echo -e "   ${BLUE}端口(port)：${PLAIN}${RED}${port}${PLAIN}"
-    echo -e "   ${BLUE}id(uuid)：${PLAIN}${RED}${uid}${PLAIN}"
-    echo -e "   ${BLUE}额外id(alterid)：${PLAIN} ${RED}${alterid}${PLAIN}"
-    echo -e "   ${BLUE}加密方式(security)：${PLAIN} ${RED}none${PLAIN}"
-    echo -e "   ${BLUE}传输协议(network)：${PLAIN} ${RED}${network}${PLAIN}" 
-    echo -e "   ${BLUE}伪装类型(type)：${PLAIN}${RED}none$PLAIN"
-    echo -e "   ${BLUE}伪装域名/主机名(host)/SNI/peer名称：${PLAIN}${RED}${domain}${PLAIN}"
-    echo -e "   ${BLUE}路径(path)：${PLAIN}${RED}${wspath}${PLAIN}"
-    echo -e "   ${BLUE}底层安全传输(tls)：${PLAIN}${RED}TLS${PLAIN}"
+    echo -e "   ${BLUE}Port (port):${PLAIN}${RED}${port}${PLAIN}"
+    echo -e "   ${BLUE}id(uuid):${PLAIN}${RED}${uid}${PLAIN}"
+    echo -e "   ${BLUE}AlterId (alterid):${PLAIN} ${RED}${alterid}${PLAIN}"
+    echo -e "   ${BLUE}Encryption (security):${PLAIN} ${RED}none${PLAIN}"
+    echo -e "   ${BLUE}Transport protocol (network):${PLAIN} ${RED}${network}${PLAIN}" 
+    echo -e "   ${BLUE}Disguise type (type):${PLAIN}${RED}none$PLAIN"
+    echo -e "   ${BLUE}Disguise domain/hostname (host)/SNI/peer name:${PLAIN}${RED}${domain}${PLAIN}"
+    echo -e "   ${BLUE}Path (path):${PLAIN}${RED}${wspath}${PLAIN}"
+    echo -e "   ${BLUE}Underlying secure transport (tls):${PLAIN}${RED}TLS${PLAIN}"
     echo  
-    echo -e "   ${BLUE}vmess链接:${PLAIN} $RED$link$PLAIN"
+    echo -e "   ${BLUE}vmess link:${PLAIN} $RED$link$PLAIN"
 }
 
 showInfo() {
     res=`status`
     if [[ $res -lt 2 ]]; then
-        colorEcho $RED " V2ray未安装，请先安装！"
+        colorEcho $RED " V2ray is not installed, please install it first!"
         return
     fi
 
     echo ""
-    echo -n -e " ${BLUE}V2ray运行状态：${PLAIN}"
+    echo -n -e " ${BLUE}V2ray running status:${PLAIN}"
     statusText
-    echo -e " ${BLUE}V2ray配置文件: ${PLAIN} ${RED}${CONFIG_FILE}${PLAIN}"
-    colorEcho $BLUE " V2ray配置信息："
+    echo -e " ${BLUE}V2ray config file: ${PLAIN} ${RED}${CONFIG_FILE}${PLAIN}"
+    colorEcho $BLUE " V2ray configuration info:"
 
     getConfigFileInfo
 
-    echo -e "   ${BLUE}协议: ${PLAIN} ${RED}${protocol}${PLAIN}"
+    echo -e "   ${BLUE}Protocol: ${PLAIN} ${RED}${protocol}${PLAIN}"
     if [[ "$trojan" = "true" ]]; then
         outputTrojan
         return 0
@@ -1736,45 +1736,45 @@ showInfo() {
     else
         if [[ "$kcp" = "true" ]]; then
             echo -e "   ${BLUE}IP(address): ${PLAIN} ${RED}${IP}${PLAIN}"
-            echo -e "   ${BLUE}端口(port)：${PLAIN}${RED}${port}${PLAIN}"
-            echo -e "   ${BLUE}id(uuid)：${PLAIN}${RED}${uid}${PLAIN}"
-            echo -e "   ${BLUE}加密(encryption)：${PLAIN} ${RED}none${PLAIN}"
-            echo -e "   ${BLUE}传输协议(network)：${PLAIN} ${RED}${network}${PLAIN}"
-            echo -e "   ${BLUE}伪装类型(type)：${PLAIN} ${RED}${type}${PLAIN}"
-            echo -e "   ${BLUE}mkcp seed：${PLAIN} ${RED}${seed}${PLAIN}" 
+            echo -e "   ${BLUE}Port (port):${PLAIN}${RED}${port}${PLAIN}"
+            echo -e "   ${BLUE}id(uuid):${PLAIN}${RED}${uid}${PLAIN}"
+            echo -e "   ${BLUE}Encryption (encryption):${PLAIN} ${RED}none${PLAIN}"
+            echo -e "   ${BLUE}Transport protocol (network):${PLAIN} ${RED}${network}${PLAIN}"
+            echo -e "   ${BLUE}Disguise type (type):${PLAIN} ${RED}${type}${PLAIN}"
+            echo -e "   ${BLUE}mkcp seed:${PLAIN} ${RED}${seed}${PLAIN}" 
             return 0
         fi
         if [[ "$xtls" = "true" ]]; then
             echo -e "   ${BLUE}IP(address): ${PLAIN} ${RED}${IP}${PLAIN}"
-            echo -e "   ${BLUE}端口(port)：${PLAIN}${RED}${port}${PLAIN}"
-            echo -e "   ${BLUE}id(uuid)：${PLAIN}${RED}${uid}${PLAIN}"
-            echo -e "   ${BLUE}流控(flow)：${PLAIN}$RED$flow${PLAIN}"
-            echo -e "   ${BLUE}加密(encryption)：${PLAIN} ${RED}none${PLAIN}"
-            echo -e "   ${BLUE}传输协议(network)：${PLAIN} ${RED}${network}${PLAIN}" 
-            echo -e "   ${BLUE}伪装类型(type)：${PLAIN}${RED}none$PLAIN"
-            echo -e "   ${BLUE}伪装域名/主机名(host)/SNI/peer名称：${PLAIN}${RED}${domain}${PLAIN}"
-            echo -e "   ${BLUE}底层安全传输(tls)：${PLAIN}${RED}XTLS${PLAIN}"
+            echo -e "   ${BLUE}Port (port):${PLAIN}${RED}${port}${PLAIN}"
+            echo -e "   ${BLUE}id(uuid):${PLAIN}${RED}${uid}${PLAIN}"
+            echo -e "   ${BLUE}Flow control (flow):${PLAIN}$RED$flow${PLAIN}"
+            echo -e "   ${BLUE}Encryption (encryption):${PLAIN} ${RED}none${PLAIN}"
+            echo -e "   ${BLUE}Transport protocol (network):${PLAIN} ${RED}${network}${PLAIN}" 
+            echo -e "   ${BLUE}Disguise type (type):${PLAIN}${RED}none$PLAIN"
+            echo -e "   ${BLUE}Disguise domain/hostname (host)/SNI/peer name:${PLAIN}${RED}${domain}${PLAIN}"
+            echo -e "   ${BLUE}Underlying secure transport (tls):${PLAIN}${RED}XTLS${PLAIN}"
         elif [[ "$ws" = "false" ]]; then
             echo -e "   ${BLUE}IP(address):  ${PLAIN}${RED}${IP}${PLAIN}"
-            echo -e "   ${BLUE}端口(port)：${PLAIN}${RED}${port}${PLAIN}"
-            echo -e "   ${BLUE}id(uuid)：${PLAIN}${RED}${uid}${PLAIN}"
-            echo -e "   ${BLUE}流控(flow)：${PLAIN}$RED$flow${PLAIN}"
-            echo -e "   ${BLUE}加密(encryption)：${PLAIN} ${RED}none${PLAIN}"
-            echo -e "   ${BLUE}传输协议(network)：${PLAIN} ${RED}${network}${PLAIN}" 
-            echo -e "   ${BLUE}伪装类型(type)：${PLAIN}${RED}none$PLAIN"
-            echo -e "   ${BLUE}伪装域名/主机名(host)/SNI/peer名称：${PLAIN}${RED}${domain}${PLAIN}"
-            echo -e "   ${BLUE}底层安全传输(tls)：${PLAIN}${RED}TLS${PLAIN}"
+            echo -e "   ${BLUE}Port (port):${PLAIN}${RED}${port}${PLAIN}"
+            echo -e "   ${BLUE}id(uuid):${PLAIN}${RED}${uid}${PLAIN}"
+            echo -e "   ${BLUE}Flow control (flow):${PLAIN}$RED$flow${PLAIN}"
+            echo -e "   ${BLUE}Encryption (encryption):${PLAIN} ${RED}none${PLAIN}"
+            echo -e "   ${BLUE}Transport protocol (network):${PLAIN} ${RED}${network}${PLAIN}" 
+            echo -e "   ${BLUE}Disguise type (type):${PLAIN}${RED}none$PLAIN"
+            echo -e "   ${BLUE}Disguise domain/hostname (host)/SNI/peer name:${PLAIN}${RED}${domain}${PLAIN}"
+            echo -e "   ${BLUE}Underlying secure transport (tls):${PLAIN}${RED}TLS${PLAIN}"
         else
             echo -e "   ${BLUE}IP(address): ${PLAIN} ${RED}${IP}${PLAIN}"
-            echo -e "   ${BLUE}端口(port)：${PLAIN}${RED}${port}${PLAIN}"
-            echo -e "   ${BLUE}id(uuid)：${PLAIN}${RED}${uid}${PLAIN}"
-            echo -e "   ${BLUE}流控(flow)：${PLAIN}$RED$flow${PLAIN}"
-            echo -e "   ${BLUE}加密(encryption)：${PLAIN} ${RED}none${PLAIN}"
-            echo -e "   ${BLUE}传输协议(network)：${PLAIN} ${RED}${network}${PLAIN}" 
-            echo -e "   ${BLUE}伪装类型(type)：${PLAIN}${RED}none$PLAIN"
-            echo -e "   ${BLUE}伪装域名/主机名(host)/SNI/peer名称：${PLAIN}${RED}${domain}${PLAIN}"
-            echo -e "   ${BLUE}路径(path)：${PLAIN}${RED}${wspath}${PLAIN}"
-            echo -e "   ${BLUE}底层安全传输(tls)：${PLAIN}${RED}TLS${PLAIN}"
+            echo -e "   ${BLUE}Port (port):${PLAIN}${RED}${port}${PLAIN}"
+            echo -e "   ${BLUE}id(uuid):${PLAIN}${RED}${uid}${PLAIN}"
+            echo -e "   ${BLUE}Flow control (flow):${PLAIN}$RED$flow${PLAIN}"
+            echo -e "   ${BLUE}Encryption (encryption):${PLAIN} ${RED}none${PLAIN}"
+            echo -e "   ${BLUE}Transport protocol (network):${PLAIN} ${RED}${network}${PLAIN}" 
+            echo -e "   ${BLUE}Disguise type (type):${PLAIN}${RED}none$PLAIN"
+            echo -e "   ${BLUE}Disguise domain/hostname (host)/SNI/peer name:${PLAIN}${RED}${domain}${PLAIN}"
+            echo -e "   ${BLUE}Path (path):${PLAIN}${RED}${wspath}${PLAIN}"
+            echo -e "   ${BLUE}Underlying secure transport (tls):${PLAIN}${RED}TLS${PLAIN}"
         fi
     fi
 }
@@ -1782,7 +1782,7 @@ showInfo() {
 showLog() {
     res=`status`
     if [[ $res -lt 2 ]]; then
-        colorEcho $RED " V2ray未安装，请先安装！"
+        colorEcho $RED " V2ray is not installed, please install it first!"
         return
     fi
 
@@ -1792,41 +1792,41 @@ showLog() {
 menu() {
     clear
     echo "#############################################################"
-    echo -e "#                   ${RED}v2ray一键安装脚本${PLAIN}                      #"
-    echo -e "# ${GREEN}作者${PLAIN}: 网络跳越(hijk)                                      #"
-    echo -e "# ${GREEN}网址${PLAIN}: https://hijk.art                                    #"
-    echo -e "# ${GREEN}论坛${PLAIN}: https://hijk.club                                   #"
-    echo -e "# ${GREEN}TG群${PLAIN}: https://t.me/hijkclub                               #"
-    echo -e "# ${GREEN}Youtube频道${PLAIN}: https://youtube.com/channel/UCYTB--VsObzepVJtc9yvUxQ #"
+    echo -e "#                   ${RED}v2ray one-click installation script${PLAIN}                      #"
+    echo -e "# ${GREEN}Author${PLAIN}: 网络跳越(hijk)                                      #"
+    echo -e "# ${GREEN}Website${PLAIN}: https://hijk.art                                    #"
+    echo -e "# ${GREEN}Forum${PLAIN}: https://hijk.club                                   #"
+    echo -e "# ${GREEN}TG Group${PLAIN}: https://t.me/hijkclub                               #"
+    echo -e "# ${GREEN}YouTube Channel${PLAIN}: https://youtube.com/channel/UCYTB--VsObzepVJtc9yvUxQ #"
     echo "#############################################################"
 
-    echo -e "  ${GREEN}1.${PLAIN}   安装V2ray-VMESS"
-    echo -e "  ${GREEN}2.${PLAIN}   安装V2ray-${BLUE}VMESS+mKCP${PLAIN}"
-    echo -e "  ${GREEN}3.${PLAIN}   安装V2ray-VMESS+TCP+TLS"
-    echo -e "  ${GREEN}4.${PLAIN}   安装V2ray-${BLUE}VMESS+WS+TLS${PLAIN}${RED}(推荐)${PLAIN}"
-    echo -e "  ${GREEN}5.${PLAIN}   安装V2ray-${BLUE}VLESS+mKCP${PLAIN}"
-    echo -e "  ${GREEN}6.${PLAIN}   安装V2ray-VLESS+TCP+TLS"
-    echo -e "  ${GREEN}7.${PLAIN}   安装V2ray-${BLUE}VLESS+WS+TLS${PLAIN}${RED}(可过cdn)${PLAIN}"
-    echo -e "  ${GREEN}8.${PLAIN}   安装V2ray-${BLUE}VLESS+TCP+XTLS${PLAIN}${RED}(推荐)${PLAIN}"
-    echo -e "  ${GREEN}9.${PLAIN}   安装${BLUE}trojan${PLAIN}${RED}(推荐)${PLAIN}"
-    echo -e "  ${GREEN}10.${PLAIN}  安装${BLUE}trojan+XTLS${PLAIN}${RED}(推荐)${PLAIN}"
+    echo -e "  ${GREEN}1.${PLAIN}   Install V2ray-VMESS"
+    echo -e "  ${GREEN}2.${PLAIN}   Install V2ray-${BLUE}VMESS+mKCP${PLAIN}"
+    echo -e "  ${GREEN}3.${PLAIN}   Install V2ray-VMESS+TCP+TLS"
+    echo -e "  ${GREEN}4.${PLAIN}   Install V2ray-${BLUE}VMESS+WS+TLS${PLAIN}${RED}(Recommended)${PLAIN}"
+    echo -e "  ${GREEN}5.${PLAIN}   Install V2ray-${BLUE}VLESS+mKCP${PLAIN}"
+    echo -e "  ${GREEN}6.${PLAIN}   Install V2ray-VLESS+TCP+TLS"
+    echo -e "  ${GREEN}7.${PLAIN}   Install V2ray-${BLUE}VLESS+WS+TLS${PLAIN}${RED}(CDN compatible)${PLAIN}"
+    echo -e "  ${GREEN}8.${PLAIN}   Install V2ray-${BLUE}VLESS+TCP+XTLS${PLAIN}${RED}(Recommended)${PLAIN}"
+    echo -e "  ${GREEN}9.${PLAIN}   Install ${BLUE}trojan${PLAIN}${RED}(Recommended)${PLAIN}"
+    echo -e "  ${GREEN}10.${PLAIN}  Install ${BLUE}trojan+XTLS${PLAIN}${RED}(Recommended)${PLAIN}"
     echo " -------------"
-    echo -e "  ${GREEN}11.${PLAIN}  更新V2ray"
-    echo -e "  ${GREEN}12.  ${RED}卸载V2ray${PLAIN}"
+    echo -e "  ${GREEN}11.${PLAIN}  Update V2ray"
+    echo -e "  ${GREEN}12.  ${RED}Uninstall V2ray${PLAIN}"
     echo " -------------"
-    echo -e "  ${GREEN}13.${PLAIN}  启动V2ray"
-    echo -e "  ${GREEN}14.${PLAIN}  重启V2ray"
-    echo -e "  ${GREEN}15.${PLAIN}  停止V2ray"
+    echo -e "  ${GREEN}13.${PLAIN}  Start V2ray"
+    echo -e "  ${GREEN}14.${PLAIN}  Restart V2ray"
+    echo -e "  ${GREEN}15.${PLAIN}  Stop V2ray"
     echo " -------------"
-    echo -e "  ${GREEN}16.${PLAIN}  查看V2ray配置"
-    echo -e "  ${GREEN}17.${PLAIN}  查看V2ray日志"
+    echo -e "  ${GREEN}16.${PLAIN}  View V2ray config"
+    echo -e "  ${GREEN}17.${PLAIN}  View V2ray logs"
     echo " -------------"
-    echo -e "  ${GREEN}0.${PLAIN}   退出"
-    echo -n " 当前状态："
+    echo -e "  ${GREEN}0.${PLAIN}   Exit"
+    echo -n " Current status:"
     statusText
     echo 
 
-    read -p " 请选择操作[0-17]：" answer
+    read -p " Please choose an action [0-17]: " answer
     case $answer in
         0)
             exit 0
@@ -1902,7 +1902,7 @@ menu() {
             showLog
             ;;
         *)
-            colorEcho $RED " 请选择正确的操作！"
+            colorEcho $RED " Please choose a valid action!"
             exit 1
             ;;
     esac
@@ -1917,7 +1917,7 @@ case "$action" in
         ${action}
         ;;
     *)
-        echo " 参数错误"
-        echo " 用法: `basename $0` [menu|update|uninstall|start|restart|stop|showInfo|showLog]"
+        echo " Invalid argument"
+        echo " Usage: `basename $0` [menu|update|uninstall|start|restart|stop|showInfo|showLog]"
         ;;
 esac
