@@ -1,117 +1,223 @@
 <!DOCTYPE html>
-<html lang="en-us">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<meta http-equiv="Cache-Control" content="no-siteapp" />
-		<!--[if lte IE 9]><script src="select/selectivizr.js"></script><![endif]-->
-		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" sizes="any" /> 
-		<title>Snake</title>
-		<style>
-			body ::selection{
-				color: #FFFFFF;
-				background: #FF1493;
-			}
-			body {
-				display: flex;
-				height: 100vh;
-				margin: 0;
-				padding: 0;
-				justify-content: center;
-				align-items: center;
-				background: #000000;
-				color: #FFFFFF;
-			}
-		</style>
-	</head>
-	<body>
-		<a href="index.html">
-			<font style="font-size:28px;color:white;text-shadow: 5px 5px 5px #00FF00;">
-				<b>
-					HOMEPAGE
-				</b>
-			</font>
-		</a>
-		<br />
-		<canvas id="can" width="400" height="400" style="background-color: plum">
-			Your browser doesn't support HTML5 canvas. Please update Internet Explorer to at least IE10 and enable ActiveX and scripting. Google Chrome is recommended.
-		</canvas>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="A simple Snake game">
+	<title>Snake</title>
 
-		<script>
-			var snake = [41, 40],
-				// The snake array represents the snake's body and its initial positions.
-				direction = 1,
-				// 1 means right, -1 means left, 20 means down, and -20 means up.
-				food = 43,
-				// The position of the food.
-				n,
-				// The position of the snake's next movement.
-				box = document.getElementById('can').getContext('2d');
-				// Positions 0 through 399 represent a [0–19] × [0–19] grid.
-				// Each grid cell is 20 pixels wide.
+	<style>
+		:root {
+			--background: #000;
+			--board: plum;
+			--snake: darkviolet;
+			--food: deeppink;
+			--text: #fff;
+			--accent: #00ff00;
+		}
 
-			function draw(seat, color) {
-				box.fillStyle = color;
-				box.fillRect(seat % 20 * 20 + 1, ~~(seat / 20) * 20 + 1, 18, 18);
-				// Draw a rectangle using the specified color.
-				// The position is calculated as x and y coordinates, with a width and height of 18 pixels.
-			}
+		* {
+			box-sizing: border-box;
+		}
 
-			document.onkeydown = function(evt) {
-				// Change the direction when an arrow key is pressed.
-				direction = snake[1] - snake[0] == (n = [-1, -20, 1, 20][(evt || event).keyCode - 37] || direction) ? direction : n;
-			};
+		body {
+			display: flex;
+			min-height: 100vh;
+			margin: 0;
+			padding: 1rem;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: 1rem;
+			background: var(--background);
+			color: var(--text);
+			font-family: system-ui, sans-serif;
+			text-align: center;
+		}
 
-			!function() {
-				snake.unshift(n = snake[0] + direction);
-				// n is the position of the snake's new head.
+		::selection {
+			color: #fff;
+			background: #ff1493;
+		}
 
-				if (
-					snake.indexOf(n, 1) > 0 ||
-					n < 0 ||
-					n > 399 ||
-					direction == 1 && n % 20 == 0 ||
-					direction == -1 && n % 20 == 19
-				) {
-					// Check whether the snake has collided with itself or with a wall.
-					return alert("GAME OVER");
+		.home-link {
+			color: var(--text);
+			font-size: 1.75rem;
+			font-weight: 700;
+			text-shadow: 5px 5px 5px var(--accent);
+		}
+
+		canvas {
+			display: block;
+			width: min(90vw, 400px);
+			height: auto;
+			background: var(--board);
+			border: 2px solid #fff;
+			image-rendering: pixelated;
+		}
+
+		.controls {
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+		}
+
+		button {
+			padding: 0.5rem 0.9rem;
+			cursor: pointer;
+		}
+
+		footer {
+			margin-top: 0.5rem;
+		}
+	</style>
+</head>
+
+<body>
+	<a class="home-link" href="index.html">HOMEPAGE</a>
+
+	<canvas
+		id="can"
+		width="400"
+		height="400"
+		aria-label="Snake game">
+		Your browser does not support HTML5 canvas.
+	</canvas>
+
+	<div class="controls">
+		<button id="versionButton" type="button">Version</button>
+		<button id="speedButton" type="button">Speed</button>
+	</div>
+
+	<footer>PoweredByYaozeYE</footer>
+
+	<script>
+		'use strict';
+
+		const canvas = document.getElementById('can');
+		const context = canvas.getContext('2d');
+
+		const GRID_SIZE = 20;
+		const CELL_SIZE = canvas.width / GRID_SIZE;
+		const GAME_SPEED = 100;
+
+		const COLORS = {
+			board: 'plum',
+			snake: 'darkviolet',
+			food: 'deeppink'
+		};
+
+		const DIRECTIONS = {
+			ArrowLeft: -1,
+			ArrowUp: -GRID_SIZE,
+			ArrowRight: 1,
+			ArrowDown: GRID_SIZE
+		};
+
+		let snake = [41, 40];
+		let direction = 1;
+		let food = 43;
+		let gameRunning = true;
+
+		function drawCell(position, color) {
+			const x = (position % GRID_SIZE) * CELL_SIZE;
+			const y = Math.floor(position / GRID_SIZE) * CELL_SIZE;
+
+			context.fillStyle = color;
+			context.fillRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+		}
+
+		function isWallCollision(position, movement) {
+			return (
+				position < 0 ||
+				position >= GRID_SIZE * GRID_SIZE ||
+				(movement === 1 && position % GRID_SIZE === 0) ||
+				(movement === -1 && position % GRID_SIZE === GRID_SIZE - 1)
+			);
+		}
+
+		function placeFood() {
+			const availableCells = [];
+
+			for (let cell = 0; cell < GRID_SIZE * GRID_SIZE; cell++) {
+				if (!snake.includes(cell)) {
+					availableCells.push(cell);
 				}
+			}
 
-				draw(n, "darkviolet");
-				// Draw the snake's new head.
+			if (availableCells.length === 0) {
+				gameRunning = false;
+				alert('YOU WIN!');
+				return;
+			}
 
-				if(n == food) {
-					// When the snake eats the food, add a new segment and generate new food.
-					// The tail is not removed, so the snake grows.
-					while (snake.indexOf(food = ~~(Math.random() * 400)) > 0);
-					draw(food, "deeppink");
-				} else {
-					// When the snake does not eat the food, remove the tail to move the snake forward.
-					draw(snake.pop(),"plum");
-				}
+			food = availableCells[
+				Math.floor(Math.random() * availableCells.length)
+			];
 
-				setTimeout(arguments.callee, 100);
-				// Execute the function once every 100 milliseconds to control the snake's speed.
-			}();
-		</script>
+			drawCell(food, COLORS.food);
+		}
 
-		<br />
-		<br />
+		function gameOver() {
+			gameRunning = false;
+			alert('GAME OVER');
+		}
 
-		<button type="button" onclick="alert('Version 1 Stable_Build20171007A GameVersion1.21')">
-				Version
-		</button>
+		function gameLoop() {
+			if (!gameRunning) {
+				return;
+			}
 
-		<p>
-			;
-		</p>
+			const nextPosition = snake[0] + direction;
+			snake.unshift(nextPosition);
 
-		<button type="button" onclick="alert('100ms/step')">
-			Speed
-		</button>
+			if (
+				isWallCollision(nextPosition, direction) ||
+				snake.indexOf(nextPosition, 1) !== -1
+			) {
+				gameOver();
+				return;
+			}
 
-		<p>
-				PoweredByYaozeYE
-		</p>
-	</body>
+			drawCell(nextPosition, COLORS.snake);
+
+			if (nextPosition === food) {
+				placeFood();
+			} else {
+				drawCell(snake.pop(), COLORS.board);
+			}
+
+			setTimeout(gameLoop, GAME_SPEED);
+		}
+
+		document.addEventListener('keydown', (event) => {
+			const newDirection = DIRECTIONS[event.key];
+
+			if (newDirection === undefined) {
+				return;
+			}
+
+			event.preventDefault();
+
+			const isReverseDirection =
+				snake.length > 1 &&
+				snake[1] - snake[0] === newDirection;
+
+			if (!isReverseDirection) {
+				direction = newDirection;
+			}
+		});
+
+		document.getElementById('versionButton').addEventListener('click', () => {
+			alert('Version 1 Stable_Build20171007A GameVersion1.21');
+		});
+
+		document.getElementById('speedButton').addEventListener('click', () => {
+			alert(`${GAME_SPEED}ms/step`);
+		});
+
+		drawCell(food, COLORS.food);
+		gameLoop();
+	</script>
+</body>
 </html>
