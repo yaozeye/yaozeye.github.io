@@ -58,14 +58,22 @@
 			image-rendering: pixelated;
 		}
 
-		.controls {
+		.controls,
+		.speed-control {
 			display: flex;
 			align-items: center;
+			justify-content: center;
 			gap: 0.75rem;
+			flex-wrap: wrap;
 		}
 
 		button {
 			padding: 0.5rem 0.9rem;
+			cursor: pointer;
+		}
+
+		input[type='range'] {
+			width: min(70vw, 240px);
 			cursor: pointer;
 		}
 
@@ -87,8 +95,23 @@
 	</canvas>
 
 	<div class="controls">
+		<button id="startButton" type="button">Start</button>
+		<button id="pauseButton" type="button">Pause</button>
+		<button id="resetButton" type="button">Reset</button>
 		<button id="versionButton" type="button">Version</button>
 		<button id="speedButton" type="button">Speed</button>
+	</div>
+
+	<div class="speed-control">
+		<label for="speedSlider">Speed: <output id="speedValue">100</output>ms/step</label>
+		<input
+			id="speedSlider"
+			type="range"
+			min="40"
+			max="300"
+			step="10"
+			value="100"
+			aria-label="Game speed in milliseconds per step" />
 	</div>
 
 	<footer>PoweredByYaozeYE</footer>
@@ -98,10 +121,14 @@
 
 		const canvas = document.getElementById('can');
 		const context = canvas.getContext('2d');
+		const speedSlider = document.getElementById('speedSlider');
+		const speedValue = document.getElementById('speedValue');
 
 		const GRID_SIZE = 20;
 		const CELL_SIZE = canvas.width / GRID_SIZE;
-		const GAME_SPEED = 100;
+		const DEFAULT_GAME_SPEED = 100;
+		const MIN_GAME_SPEED = 40;
+		const MAX_GAME_SPEED = 300;
 
 		const COLORS = {
 			board: 'plum',
@@ -116,10 +143,13 @@
 			ArrowDown: GRID_SIZE
 		};
 
-		let snake = [41, 40];
-		let direction = 1;
-		let food = 43;
-		let gameRunning = true;
+		let snake;
+		let direction;
+		let food;
+		let gameRunning = false;
+		let gameFinished = false;
+		let gameTimer;
+		let gameSpeed = DEFAULT_GAME_SPEED;
 
 		function drawCell(position, color) {
 			const x = (position % GRID_SIZE) * CELL_SIZE;
@@ -127,6 +157,14 @@
 
 			context.fillStyle = color;
 			context.fillRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+		}
+
+		function drawBoard() {
+			context.fillStyle = COLORS.board;
+			context.fillRect(0, 0, canvas.width, canvas.height);
+
+			snake.forEach((cell) => drawCell(cell, COLORS.snake));
+			drawCell(food, COLORS.food);
 		}
 
 		function isWallCollision(position, movement) {
@@ -149,6 +187,8 @@
 
 			if (availableCells.length === 0) {
 				gameRunning = false;
+				gameFinished = true;
+				clearTimeout(gameTimer);
 				alert('YOU WIN!');
 				return;
 			}
@@ -156,12 +196,12 @@
 			food = availableCells[
 				Math.floor(Math.random() * availableCells.length)
 			];
-
-			drawCell(food, COLORS.food);
 		}
 
 		function gameOver() {
 			gameRunning = false;
+			gameFinished = true;
+			clearTimeout(gameTimer);
 			alert('GAME OVER');
 		}
 
@@ -181,15 +221,40 @@
 				return;
 			}
 
-			drawCell(nextPosition, COLORS.snake);
-
 			if (nextPosition === food) {
 				placeFood();
 			} else {
 				drawCell(snake.pop(), COLORS.board);
 			}
 
-			setTimeout(gameLoop, GAME_SPEED);
+			drawCell(nextPosition, COLORS.snake);
+			gameTimer = setTimeout(gameLoop, gameSpeed);
+		}
+
+		function startGame() {
+			if (gameFinished) {
+				return;
+			}
+
+			if (!gameRunning) {
+				gameRunning = true;
+				gameLoop();
+			}
+		}
+
+		function pauseGame() {
+			gameRunning = false;
+			clearTimeout(gameTimer);
+		}
+
+		function resetGame() {
+			clearTimeout(gameTimer);
+			snake = [41, 40];
+			direction = 1;
+			food = 43;
+			gameRunning = false;
+			gameFinished = false;
+			drawBoard();
 		}
 
 		document.addEventListener('keydown', (event) => {
@@ -210,16 +275,29 @@
 			}
 		});
 
+		document.getElementById('startButton').addEventListener('click', startGame);
+		document.getElementById('pauseButton').addEventListener('click', pauseGame);
+		document.getElementById('resetButton').addEventListener('click', resetGame);
+
 		document.getElementById('versionButton').addEventListener('click', () => {
 			alert('Version 1 Stable_Build20260917A GameVersion1.22');
 		});
 
 		document.getElementById('speedButton').addEventListener('click', () => {
-			alert(`${GAME_SPEED}ms/step`);
+			alert(`${gameSpeed}ms/step`);
 		});
 
-		drawCell(food, COLORS.food);
-		gameLoop();
+		speedSlider.addEventListener('input', (event) => {
+			gameSpeed = Number(event.target.value);
+			speedValue.value = gameSpeed;
+			speedValue.textContent = gameSpeed;
+		});
+
+		speedSlider.min = MIN_GAME_SPEED;
+		speedSlider.max = MAX_GAME_SPEED;
+		speedValue.value = gameSpeed;
+		speedValue.textContent = gameSpeed;
+		resetGame();
 	</script>
 </body>
 </html>
