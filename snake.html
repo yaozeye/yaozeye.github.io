@@ -223,6 +223,7 @@
 
 			if (nextPosition === food) {
 				placeFood();
+				drawCell(food, COLORS.food);
 			} else {
 				drawCell(snake.pop(), COLORS.board);
 			}
