@@ -2,5 +2,3 @@
 ## Welcome
 ### License: ``MIT``
 <br />
-🦘🐨🇬🇧🇦🇺🇳🇿
-<br />
