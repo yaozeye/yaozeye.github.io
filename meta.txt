@@ -7,77 +7,78 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=11" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<meta name="msapplication-TileColor" content="#000" /> <!-- Windows 8 磁贴颜色 -->
-		<meta name="msapplication-TileImage" content="icon.png" /> <!-- Windows 8 磁贴图标 --> 
+		<meta name="msapplication-TileColor" content="#000" /> <!-- Windows 8 tile color -->
+		<meta name="msapplication-TileImage" content="icon.png" /> <!-- Windows 8 tile icon --> 
 		<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
-<!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+<!-- Optimizations for handheld devices, mainly for older browsers that do not recognize the viewport, such as BlackBerry -->
 <meta name="HandheldFriendly" content="true" />
 
-<!-- 微软的老式浏览器 -->
+<!-- Microsoft's legacy browsers -->
 <meta name="MobileOptimized" content="320" />
 
-<!-- uc强制竖屏 -->
+<!-- UC: force portrait orientation -->
 <meta name="screen-orientation" content="portrait" />
 
-<!-- QQ强制竖屏 -->
+<!-- QQ: force portrait orientation -->
 <meta name="x5-orientation" content="portrait" />
 
-<!-- UC强制全屏 -->
+<!-- UC: force fullscreen mode -->
 <meta name="full-screen" content="yes" />
 
-<!-- QQ强制全屏 -->
+<!-- QQ: force fullscreen mode -->
 <meta name="x5-fullscreen" content="true" />
 
-<!-- UC应用模式 -->
+<!-- UC application mode -->
 <meta name="browsermode" content="application" />
 
-<!-- QQ应用模式 -->
+<!-- QQ application mode -->
 <meta name="x5-page-mode" content="app" />
 
-<!-- windows phone 点击无高光 -->
+<!-- Windows Phone: disable tap highlight -->
 <meta name="msapplication-tap-highlight" content="no" />
 
 
 
-<!--HTML_head标签中META,IF IE 及 IFrame 中的页面的兼容性相关问题
-meta中常用的标签：-->
+<!-- Common META tags in the HTML head for compatibility issues involving IE and IFrames:
+Commonly used meta tags: -->
 
-‍<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><!-- 设置页面编码 -->
-<meta http-equiv="Content-Language" content="zh-CN" /><!--设置页面语言 -->
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /><!-- 强制使用IE7模式渲染 -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><!-- Set the page encoding -->
+<meta http-equiv="Content-Language" content="zh-CN" /><!-- Set the page language -->
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /><!-- Force rendering in IE7 mode -->
 
-<!-- 在IE使用时，强制使用当前IE浏览器的最新版本模式渲染，在非ＩＥ使用时，强制使用Chrome的模式渲染 -->
+<!-- In IE, force the use of the latest rendering mode supported by the current IE browser.
+In non-IE browsers, force the use of Chrome mode. -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
-<meta http-equiv="Cache-Control" content="no-siteapp" /><!-- Baidu:禁止百度生成转码后的手机站 -->
+<meta http-equiv="Cache-Control" content="no-siteapp" /><!-- Baidu: prevent conversion into a mobile site -->
 
-<meta http-equiv="refresh" content="5;URL=http://www.baidu.com" /><!-- 5秒后自动刷新指向新页面 -->
-<meta http-equiv="Cache-Control" content="no-cache" /><!-- 禁止浏览器从本地计算机的缓存中访问页面内容 -->
-<meta name="keywords" content="keywords01,keywords02"><!-- 向搜索引擎说明你的网页的关键词 -->
-<meta name="description" content="this is my web description."><!-- 告诉搜索引擎你的站点的主要内容 -->
+<meta http-equiv="refresh" content="5;URL=http://www.baidu.com" /><!-- Automatically redirect to a new page after 5 seconds -->
+<meta http-equiv="Cache-Control" content="no-cache" /><!-- Prevent the browser from accessing page content from the local computer's cache -->
+<meta name="keywords" content="keywords01,keywords02"><!-- Tell search engines the keywords of your webpage -->
+<meta name="description" content="this is my web description."><!-- Tell search engines the main content of your website -->
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-<!--Mobile:默认设备宽度,初始大小1,最大尺寸1,禁止缩放 --> 
-<meta name="renderer" content="webkit" /><!-- 360:默认采用高速模式 -->
+<!-- Mobile: default device width, initial scale 1, maximum scale 1, disable zooming --> 
+<meta name="renderer" content="webkit" /><!-- 360: use high-speed mode by default -->
 
- <!--IE 版本识别：-->
+ <!-- IE version detection: -->
 
-<!--[if IE]> 所有的IE可识别 <![endif]-->
-<!--[if !IE]> 除IE外都可识别 <![endif]--> 
-<!--[if IE 8]> 仅IE8可识别 <![endif]--> 
-<!--[if lt IE 9]> IE9以下版本可识别 <![endif]--> 
-<!--[if gt IE 6]> IE6以上版本可识别 <![endif]--> 
-<!--[if lte IE 8]> IE8及IE8以下版本可识别 <![endif]--> 
-<!--[if gte IE 9]> IE9及IE9以上版本可识别 <![endif]-->
+<!--[if IE]> Recognized by all versions of IE <![endif]-->
+<!--[if !IE]> Recognized by all browsers except IE <![endif]--> 
+<!--[if IE 8]> Recognized only by IE8 <![endif]--> 
+<!--[if lt IE 9]> Recognized by versions earlier than IE9 <![endif]--> 
+<!--[if gt IE 6]> Recognized by versions later than IE6 <![endif]--> 
+<!--[if lte IE 8]> Recognized by IE8 and earlier versions <![endif]--> 
+<!--[if gte IE 9]> Recognized by IE9 and later versions <![endif]-->
 
  
 
-<!--IFrame渲染模式:
+<!-- IFrame rendering mode:
 
-IFrame是直接使用被嵌入的网页的渲染模式，不受IFrame里的强制渲染模式所控制。
+An IFrame directly uses the rendering mode of the embedded webpage and is not controlled by the forced rendering mode specified inside the IFrame.
 
-eg:
+Example:
 
-A网页通过Iframe嵌入了B网页，A网页使用了 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />,B网页使用了<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10" />,实际运行时，A，B网页都使用的IE7的模式进行渲染。
+Page A embeds Page B through an IFrame. Page A uses <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />, while Page B uses <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10" />.
 
 -->
