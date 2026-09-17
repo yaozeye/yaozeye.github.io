@@ -11,7 +11,7 @@
 			body ::selection{
 				color: #FFFFFF;
 				background: #FF1493;
-					}
+			}
 			body {
 				display: flex;
 				height: 100vh;
@@ -19,9 +19,9 @@
 				padding: 0;
 				justify-content: center;
 				align-items: center;
-					background: #000000;
-					color: #FFFFFF;
-					}
+				background: #000000;
+				color: #FFFFFF;
+			}
 		</style>
 	</head>
 	<body>
@@ -34,62 +34,84 @@
 		</a>
 		<br />
 		<canvas id="can" width="400" height="400" style="background-color: plum">
-			Your browser doesn't support HTML5 canvas, update your IE to at least IE10 and allow 'ActiveX and Script', recommend Google Chrome.
+			Your browser doesn't support HTML5 canvas. Please update Internet Explorer to at least IE10 and enable ActiveX and scripting. Google Chrome is recommended.
 		</canvas>
 
 		<script>
 			var snake = [41, 40],
-				//snake¶ÓÁÐ±íÊ¾ÉßÉí£¬³õÊ¼½Úµã´æÔÚµ«²»ÏÔÊ¾
-				direction = 1,      
-				//1±íÊ¾ÏòÓÒ£¬-1±íÊ¾Ïò×ó£¬20±íÊ¾ÏòÏÂ£¬-20±íÊ¾ÏòÉÏ
-				food = 43,          
-				//Ê³ÎïµÄÎ»ÖÃ
-				n,                  
-				//ÓëÏÂ´ÎÒÆ¶¯µÄÎ»ÖÃÓÐ¹Ø
-				box = document.getElementById('can').getContext('2d');                                    
-				//´Ó0µ½399±íÊ¾boxÀï[0~19]*[0~19]µÄËùÓÐ½Úµã£¬Ã¿20pxÒ»¸ö½Úµã
+				// The snake array represents the snake's body and its initial positions.
+				direction = 1,
+				// 1 means right, -1 means left, 20 means down, and -20 means up.
+				food = 43,
+				// The position of the food.
+				n,
+				// The position of the snake's next movement.
+				box = document.getElementById('can').getContext('2d');
+				// Positions 0 through 399 represent a [0â€“19] Ã— [0â€“19] grid.
+				// Each grid cell is 20 pixels wide.
+
 			function draw(seat, color) {
 				box.fillStyle = color;
-				box.fillRect(seat % 20 *20 + 1, ~~(seat / 20) * 20 + 1, 18, 18);                                    
-				//ÓÃcolorÌî³äÒ»¸ö¾ØÐÎ£¬ÒÔÇ°Á½¸ö²ÎÊýÎªx£¬y×ø±ê£¬ºóÁ½¸ö²ÎÊýÎª¿íºÍ¸ß¡£
-			}        
-			document.onkeydown = function(evt) {    
-				//µ±¼üÅÌÉÏÏÂ×óÓÒ¼ü°´ÏÂµÄÊ±ºò¸Ä±ädirection
+				box.fillRect(seat % 20 * 20 + 1, ~~(seat / 20) * 20 + 1, 18, 18);
+				// Draw a rectangle using the specified color.
+				// The position is calculated as x and y coordinates, with a width and height of 18 pixels.
+			}
+
+			document.onkeydown = function(evt) {
+				// Change the direction when an arrow key is pressed.
 				direction = snake[1] - snake[0] == (n = [-1, -20, 1, 20][(evt || event).keyCode - 37] || direction) ? direction : n;
 			};
-		   !function() {
-				snake.unshift(n = snake[0] + direction);    
-				//´ËÊ±µÄnÎªÏÂ´ÎÉßÍ·³öÏÖµÄÎ»ÖÃ£¬n½øÈë¶ÓÁÐ
-				if(snake.indexOf(n, 1) > 0 || n < 0 || n > 399 || direction == 1 && n % 20 == 0 || direction == -1 && n % 20 == 19) {                                    //ifÓï¾äÅÐ¶ÏÌ°³ÔÉßÊÇ·ñ×²µ½×Ô¼º»òÕßÇ½±Ú£¬Åöµ½Ê±·µ»Ø£¬½áÊø³ÌÐò
+
+			!function() {
+				snake.unshift(n = snake[0] + direction);
+				// n is the position of the snake's new head.
+
+				if (
+					snake.indexOf(n, 1) > 0 ||
+					n < 0 ||
+					n > 399 ||
+					direction == 1 && n % 20 == 0 ||
+					direction == -1 && n % 20 == 19
+				) {
+					// Check whether the snake has collided with itself or with a wall.
 					return alert("GAME OVER");
 				}
-				draw(n, "darkviolet");    
-				//»­³öÉßÍ·ÏÂ´Î³öÏÖµÄÎ»ÖÃ
-				if(n == food) {     
-				//Èç¹û³Ôµ½Ê³ÎïÊ±£¬²úÉúÒ»¸öÉßÉíÒÔÍâµÄËæ»úµÄµã£¬²»»áÈ¥µôÉßÎ²
+
+				draw(n, "darkviolet");
+				// Draw the snake's new head.
+
+				if(n == food) {
+					// When the snake eats the food, add a new segment and generate new food.
+					// The tail is not removed, so the snake grows.
 					while (snake.indexOf(food = ~~(Math.random() * 400)) > 0);
 					draw(food, "deeppink");
-				} else {            
-				//Ã»ÓÐ³Ôµ½Ê³ÎïÊ±Õý³£ÒÆ¶¯£¬ÉßÎ²³ö¶ÓÁÐ
+				} else {
+					// When the snake does not eat the food, remove the tail to move the snake forward.
 					draw(snake.pop(),"plum");
 				}
-				setTimeout(arguments.callee, 100);      
-				//Ã¿¸ôxºÁÃëÖ´ÐÐº¯ÊýÒ»´Î£¬¿ÉÒÔµ÷½ÚÉßµÄËÙ¶È
+
+				setTimeout(arguments.callee, 100);
+				// Execute the function once every 100 milliseconds to control the snake's speed.
 			}();
 		</script>
+
 		<br />
 		<br />
+
 		<button type="button" onclick="alert('Version 1 Stable_Build20171007A GameVersion1.21')">
 				Version
 		</button>
+
 		<p>
 			;
 		</p>
+
 		<button type="button" onclick="alert('100ms/step')">
 			Speed
 		</button>
+
 		<p>
 				PoweredByYaozeYE
 		</p>
-</body>
+	</body>
 </html>
